@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 static int		expose_hook(void *param)
 {
@@ -26,13 +29,6 @@ static int		expose_hook(void *param)
 	return (0);
 }
 
-static void		env_kil(void *env)
-{
-	ft_stringkil((t_env*)env);
-	ft_arraykil((t_env*)env, &free);
-	free(env);
-}
-
 static int		key_hook(int keycode, void *param)
 {
 	t_env			*env;
@@ -40,7 +36,7 @@ static int		key_hook(int keycode, void *param)
 	env = (t_env*)param;
 	if (keycode == 65307)
 	{
-		env_kil(param);
+		ft_gbclear();
 		exit(0);
 	}
 	else if (keycode == 65361)
@@ -62,10 +58,11 @@ static t_env	*env_new(t_pt size, char *name)
 	env = MAL1(t_env);
 	if (env == NULL || (env->mlx = mlx_init()) == NULL ||
 		(env->win = mlx_new_window(env->mlx, size.x, size.y, name)) == NULL)
-		return (free(env), NULL);
+		return (ft_gbfree(env), NULL);
 	env->camera = (t_camera){0.0, 0.0, 0.0, 0.0, 0.0};
 	env->map = ft_arraynew();
 	env->error = NULL;
+	env->project = &project_test;
 	return (env);
 }
 

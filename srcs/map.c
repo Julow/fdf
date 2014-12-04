@@ -22,9 +22,6 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 	i = -1;
 	while (split[++i] != NULL)
 	{
-		ft_putstr(split[i]);
-		ft_putstr(split[i+1]);
-		ft_putchar('\n');
 		if (!ft_isnumber(split[i]))
 			valid = FALSE;
 		pos.z = ft_atod(split[i]);
@@ -32,15 +29,16 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 		*tmp = pos;
 		ft_arrayadd(map, tmp);
 		pos.x += PT_DIST;
-		free(split[i]);
+		ft_gbfree(split[i]);
 	}
-	free(split);
+	ft_gbfree(split);
 	return (valid);
 }
 
 t_bool			load_map(int fd, t_array *map)
 {
 	char			*line;
+	t_array			*tmp;
 	t_pos			pos;
 	t_bool			valid;
 
@@ -48,10 +46,12 @@ t_bool			load_map(int fd, t_array *map)
 	valid = TRUE;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (!load_pts(map, ft_strsplit(line, ' '), pos))
+		tmp = ft_arraynew();
+		if (!load_pts(tmp, ft_strsplit(line, ' '), pos))
 			valid = FALSE;
+		ft_arrayadd(map, tmp);
 		pos.y += PT_DIST;
-		free(line);
+		ft_gbfree(line);
 	}
 	return (valid);
 }

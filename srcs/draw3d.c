@@ -12,6 +12,14 @@
 
 #include "fdf.h"
 
+void			ft_3dput(t_env *env, t_pos pos, int color)
+{
+	t_pt			pt;
+
+	pt = env->project(env, pos);
+	mlx_pixel_put(env->mlx, env->win, pt.x, pt.y, color);
+}
+
 static double	ft_abs(double n)
 {
 	return ((n < 0) ? -n : n);
@@ -34,7 +42,7 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color)
 	delta.z /= pts;
 	while (--pts >= -1)
 	{
-		mlx_pixel_put(env->mlx, env->win, p1.x, p1.y, color);
+		ft_3dput(env, p1, color);
 		p1.x += delta.x;
 		p1.y += delta.y;
 		p1.z += delta.z;

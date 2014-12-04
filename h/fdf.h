@@ -13,10 +13,8 @@
 #ifndef FDF_H
 # define FDF_H
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <mlx.h>
+# include <math.h>
 
 # include "libft.h"
 # include "get_next_line.h"
@@ -58,6 +56,7 @@ typedef struct	s_env
 	t_camera		camera;
 	t_array			*map;
 	t_string		*error;
+	t_pt			(*project)(struct s_env *env, t_pos pos);
 }				t_env;
 
 typedef union	u_color
@@ -81,6 +80,13 @@ void			draw_map(t_env *env);
 /*
 ** draw3d.c
 */
+void			ft_3dput(t_env *env, t_pos pos, int color);
 void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color);
+
+/*
+** project.c
+*/
+double			ft_distancec(t_camera c, t_pos p2);
+t_pt			project_test(t_env *env, t_pos pos);
 
 #endif
