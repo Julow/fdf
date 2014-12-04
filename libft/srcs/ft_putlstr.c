@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringset.c                                     :+:      :+:    :+:   */
+/*   ft_putlstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 19:38:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/17 12:30:42 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/01 19:53:43 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/01 19:53:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
 
-void			ft_stringset(t_string *str, char *set, int index)
+void			ft_putlstr(char const *s, int len)
 {
-	ft_stringsetl(str, set, index, ft_strlen(set));
+	ft_putlstr_fd(s, len, 1);
 }

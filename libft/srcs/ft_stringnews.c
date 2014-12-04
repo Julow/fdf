@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringset.c                                     :+:      :+:    :+:   */
+/*   ft_stringnews.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 19:38:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/17 12:30:42 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/29 17:54:19 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/11/29 17:54:20 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringset(t_string *str, char *set, int index)
+t_string		*ft_stringnews(char *s)
 {
-	ft_stringsetl(str, set, index, ft_strlen(set));
+	t_string		*str;
+
+	str = ft_stringnew();
+	ft_stringadd(str, s);
+	return (str);
 }
