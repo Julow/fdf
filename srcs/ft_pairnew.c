@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringset.c                                     :+:      :+:    :+:   */
+/*   ft_pairnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 19:38:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/17 12:30:42 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/01 13:15:15 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/01 13:15:16 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringset(t_string *str, char *set, int index)
+t_pair			*ft_pairnew(char *key, void *value)
 {
-	ft_stringsetl(str, set, index, ft_strlen(set));
+	t_pair			*pair;
+
+	pair = MAL1(t_pair);
+	pair->key = ft_stringnew();
+	ft_stringadd(pair->key, key);
+	pair->value = value;
+	return (pair);
 }

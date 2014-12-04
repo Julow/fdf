@@ -15,19 +15,15 @@
 
 /*
 ** Free unused memory
-** =============
-** Return FALSE(0) if the malloc fail, TRUE(1) otherwise
 */
-t_bool			ft_arrayfree(t_array *array)
+void			ft_arrayfree(t_array *array)
 {
 	void			**tmp;
 	int				i;
 
 	if (array->length >= array->alloc_length)
-		return (TRUE);
-	tmp = MAL(void*, array->length);
-	if (tmp == NULL)
-		return (FALSE);
+		return ;
+	tmp = (void**)malloc(sizeof(void*) * array->length);
 	array->alloc_length = array->length;
 	if (array->data != NULL)
 	{
@@ -37,5 +33,4 @@ t_bool			ft_arrayfree(t_array *array)
 		free(array->data);
 	}
 	array->data = tmp;
-	return (TRUE);
 }

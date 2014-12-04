@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringext.c                                     :+:      :+:    :+:   */
+/*   ft_pairrem.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 17:29:19 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/15 17:29:20 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/01 13:17:17 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/01 13:17:18 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringext(t_string *str, int need)
+t_pair			*ft_pairrem(t_array *array, char *key)
 {
-	char			*tmp;
 	int				i;
+	t_pair			*tmp;
 
-	need += str->length;
-	if (need + 1 < str->alloc_length)
-		return ;
-	i = str->alloc_length - 1;
-	while (need >= i)
-		i += 24;
-	tmp = MAL(char, i);
-	str->alloc_length = i;
 	i = -1;
-	if (str->content != NULL)
+	while (++i < array->length)
 	{
-		while (++i < str->length)
-			tmp[i] = str->content[i];
-		i--;
-		ft_gbfree(str->content);
+		tmp = (t_pair*)(array->data[i]);
+		if (ft_strequ(tmp->key->content, key))
+		{
+			ft_arrayrem(array, i);
+			return (tmp);
+		}
 	}
-	while (++i < str->alloc_length)
-		tmp[i] = '\0';
-	str->content = tmp;
+	return (NULL);
 }
