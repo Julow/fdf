@@ -24,7 +24,6 @@ static int		expose_hook(void *param)
 	if (env->error != NULL)
 		mlx_string_put(env->mlx, env->win, 20, 40, 0xCC0000,
 			env->error->content);
-	ft_putstr("Drawing map...\n");
 	draw_map(env);
 	return (0);
 }

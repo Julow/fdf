@@ -20,16 +20,6 @@ void			ft_3dput(t_env *env, t_pos pos, int color)
 	mlx_pixel_put(env->mlx, env->win, pt.x, pt.y, color);
 }
 
-static double	ft_abs(double n)
-{
-	return ((n < 0) ? -n : n);
-}
-
-static double	ft_max(double a, double b)
-{
-	return ((a > b) ? a : b);
-}
-
 void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color)
 {
 	t_pos			delta;

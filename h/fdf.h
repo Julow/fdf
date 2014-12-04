@@ -86,7 +86,13 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color);
 /*
 ** project.c
 */
-double			ft_distancec(t_camera c, t_pos p2);
 t_pt			project_test(t_env *env, t_pos pos);
+
+/*
+** utils.c
+*/
+double			ft_distancec(t_camera c, t_pos p2);
+double			ft_abs(double n);
+double			ft_max(double a, double b);
 
 #endif
