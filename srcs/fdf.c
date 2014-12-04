@@ -17,8 +17,20 @@ static int		expose_hook(void *param)
 	t_env			*env;
 
 	env = (t_env*)param;
-	ft_putstr("Expose\n");
+	mlx_clear_window(env->mlx, env->win);
+	if (env->error != NULL)
+		mlx_string_put(env->mlx, env->win, 20, 40, 0xCC0000,
+			env->error->content);
+	ft_putstr("Drawing map...\n");
+	draw_map(env);
 	return (0);
+}
+
+static void		env_kil(void *env)
+{
+	ft_stringkil((t_env*)env);
+	ft_arraykil((t_env*)env, &free);
+	free(env);
 }
 
 static int		key_hook(int keycode, void *param)
@@ -26,9 +38,20 @@ static int		key_hook(int keycode, void *param)
 	t_env			*env;
 
 	env = (t_env*)param;
-	ft_putstr("Key ");
-	ft_putnbr(keycode);
-	ft_putchar('\n');
+	if (keycode == 65307)
+	{
+		env_kil(param);
+		exit(0);
+	}
+	else if (keycode == 65361)
+		env->camera.p -= 0.3;
+	else if (keycode == 65362)
+		env->camera.t += 0.3;
+	else if (keycode == 65363)
+		env->camera.p += 0.3;
+	else if (keycode == 65364)
+		env->camera.t -= 0.3;
+	expose_hook(param);
 	return (0);
 }
 
@@ -51,7 +74,7 @@ int				main(int argc, char **argv)
 	int				fd;
 	t_env			*env;
 
-	env = env_new(PT(600, 480), "Test");
+	env = env_new(PT(600, 480), "Fil de fer");
 	if (argc > 1)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -59,9 +82,10 @@ int				main(int argc, char **argv)
 		{
 			if (!load_map(fd, env->map))
 				env->error = ft_stringnews("Error: Bad file.");
-			else if (env->map->length == 0)
-				env->error = ft_stringnews("Error: The file is empty.");
+			else if (env->map->length <= 1)
+				env->error = ft_stringnews("Error: The file is too small.");
 			close(fd);
+			ft_putstr("Map loaded.\n");
 		}
 		else
 			env->error = ft_stringnews("Error: File not found.");

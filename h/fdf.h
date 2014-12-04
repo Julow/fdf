@@ -16,12 +16,15 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <mlx.h>
 
-# include "mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
 
-# define PT_DIST	10.0;
+# define WIDTH		720
+# define HEIGHT		580
+
+# define PT_DIST	15.0;
 
 # define PT(x,y)	((t_pt){(x), (y)})
 # define POS(x,y,z)	((t_pos){(x), (y), (z)})
@@ -57,9 +60,27 @@ typedef struct	s_env
 	t_string		*error;
 }				t_env;
 
+typedef union	u_color
+{
+	struct s_color
+	{
+		t_uchar			a;
+		t_uchar			r;
+		t_uchar			g;
+		t_uchar			b;
+	}				s;
+	int				i;
+}				t_color;
+
 /*
-** loader.c
+** map.c
 */
 t_bool			load_map(int fd, t_array *map);
+void			draw_map(t_env *env);
+
+/*
+** draw3d.c
+*/
+void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color);
 
 #endif
