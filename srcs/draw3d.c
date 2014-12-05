@@ -17,6 +17,9 @@ void			ft_3dput(t_env *env, t_pos pos, int color)
 	t_pt			pt;
 
 	pt = env->project(env, pos);
+	color += (int)(pos.z * 20) << 16;
+	color -= (int)(pos.z * 20) << 8;
+	color -= (int)(pos.z * 20);
 	mlx_pixel_put(env->mlx, env->win, pt.x, pt.y, color);
 }
 

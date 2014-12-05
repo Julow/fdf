@@ -16,12 +16,18 @@ t_pt			project_test(t_env *env, t_pos pos)
 {
 	t_pt			pt;
 	double			r;
+	double			t;
+	double			p;
 
 	r = ft_distancec(env->camera, pos);
-	pos.x += r * cos(env->camera.p) * sin(env->camera.t);
-	pos.y += r * sin(env->camera.p) * sin(env->camera.t);
-	pos.z += r * cos(env->camera.t);
-	pt.x = ((pos.x - env->camera.x) * (r / pos.z));
-	pt.y = ((pos.y - env->camera.y) * (r / pos.z));
+	t = acos((pos.z - env->camera.z) / r);
+	p = atan((pos.y - env->camera.y) / (pos.x - env->camera.x));
+	t += env->camera.t;
+	p += env->camera.p;
+	pos.x = r * sin(t) * cos(p);
+	pos.y = r * sin(t) * sin(p);
+	pos.z = r * cos(t);
+	pt.x = pos.x;
+	pt.y = pos.y;
 	return (pt);
 }

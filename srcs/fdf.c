@@ -28,24 +28,39 @@ static int		expose_hook(void *param)
 	return (0);
 }
 
+/*
+** Up: 65362
+** Down: 65364
+** left: 65361
+** right: 65363
+** w: 119
+** s: 115
+** a: 97
+** d: 100
+*/
 static int		key_hook(int keycode, void *param)
 {
 	t_env			*env;
 
 	env = (t_env*)param;
 	if (keycode == 65307)
-	{
-		ft_gbclear();
 		exit(0);
-	}
 	else if (keycode == 65361)
-		env->camera.p -= 0.3;
-	else if (keycode == 65362)
-		env->camera.t += 0.3;
+		env->camera.t -= 0.3;
 	else if (keycode == 65363)
+		env->camera.t += 0.3;
+	else if (keycode == 65362)
 		env->camera.p += 0.3;
 	else if (keycode == 65364)
-		env->camera.t -= 0.3;
+		env->camera.p -= 0.3;
+	else if (keycode == 97)
+		env->camera.x += 10;
+	else if (keycode == 100)
+		env->camera.x -= 10;
+	else if (keycode == 119)
+		env->camera.y += 10;
+	else if (keycode == 115)
+		env->camera.y -= 10;
 	expose_hook(param);
 	return (0);
 }
@@ -57,8 +72,8 @@ static t_env	*env_new(t_pt size, char *name)
 	env = MAL1(t_env);
 	if (env == NULL || (env->mlx = mlx_init()) == NULL ||
 		(env->win = mlx_new_window(env->mlx, size.x, size.y, name)) == NULL)
-		return (ft_gbfree(env), NULL);
-	env->camera = (t_camera){0.0, 0.0, 0.0, 0.0, 0.0};
+		return (free(env), NULL);
+	env->camera = (t_camera){0.0, 0.0, 10.0, 0.0, 0.0};
 	env->map = ft_arraynew();
 	env->error = NULL;
 	env->project = &project_test;
@@ -81,7 +96,6 @@ int				main(int argc, char **argv)
 			else if (env->map->length <= 1)
 				env->error = ft_stringnews("Error: The file is too small.");
 			close(fd);
-			ft_putstr("Map loaded.\n");
 		}
 		else
 			env->error = ft_stringnews("Error: File not found.");

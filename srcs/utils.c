@@ -14,9 +14,9 @@
 
 double			ft_distancec(t_camera c, t_pos p2)
 {
-	p2.x = c.x - p2.x;
-	p2.y = c.y - p2.y;
-	p2.z = c.z - p2.z;
+	p2.x = p2.x - c.x;
+	p2.y = p2.y - c.y;
+	p2.z = p2.z - c.z;
 	return (sqrt((p2.x * p2.x) + (p2.y * p2.y) + (p2.z * p2.z)));
 }
 

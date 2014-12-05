@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdlib.h>
 
 static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 {
@@ -29,9 +30,9 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 		*tmp = pos;
 		ft_arrayadd(map, tmp);
 		pos.x += PT_DIST;
-		ft_gbfree(split[i]);
+		free(split[i]);
 	}
-	ft_gbfree(split);
+	free(split);
 	return (valid);
 }
 
@@ -51,7 +52,7 @@ t_bool			load_map(int fd, t_array *map)
 			valid = FALSE;
 		ft_arrayadd(map, tmp);
 		pos.y += PT_DIST;
-		ft_gbfree(line);
+		free(line);
 	}
 	return (valid);
 }
