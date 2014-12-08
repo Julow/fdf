@@ -12,6 +12,14 @@
 
 #include "fdf.h"
 
+double			ft_distance(t_pos p1, t_pos p2)
+{
+	p2.x = p2.x - p1.x;
+	p2.y = p2.y - p1.y;
+	p2.z = p2.z - p1.z;
+	return (sqrt((p2.x * p2.x) + (p2.y * p2.y) + (p2.z * p2.z)));
+}
+
 double			ft_distancec(t_camera c, t_pos p2)
 {
 	p2.x = p2.x - c.x;

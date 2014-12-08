@@ -17,15 +17,21 @@
 # include <math.h>
 
 # include "libft.h"
-# include "get_next_line.h"
 
-# define WIDTH		720
-# define HEIGHT		580
+# define WIDTH		1500
+# define HEIGHT		1200
 
 # define PT_DIST	15.0;
 
 # define PT(x,y)	((t_pt){(x), (y)})
 # define POS(x,y,z)	((t_pos){(x), (y), (z)})
+
+# define ROUND(n)	((int)(0.5 + (n)))
+
+typedef struct	s_matrix
+{
+	double			m[9];
+}				t_matrix;
 
 typedef struct	s_pt
 {
@@ -91,8 +97,16 @@ t_pt			project_test(t_env *env, t_pos pos);
 /*
 ** utils.c
 */
+double			ft_distance(t_pos p1, t_pos p2);
 double			ft_distancec(t_camera c, t_pos p2);
 double			ft_abs(double n);
 double			ft_max(double a, double b);
+
+/*
+** matrix.c
+*/
+void			matrix_reset(t_matrix *m);
+void			matrix_rot(t_matrix *m, double rot);
+void			matrix_mult(t_matrix *m1, t_matrix *m2);
 
 #endif

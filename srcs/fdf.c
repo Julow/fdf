@@ -54,13 +54,15 @@ static int		key_hook(int keycode, void *param)
 	else if (keycode == 65364)
 		env->camera.p -= 0.3;
 	else if (keycode == 97)
-		env->camera.x += 10;
+		env->camera.x += 70;
 	else if (keycode == 100)
-		env->camera.x -= 10;
+		env->camera.x -= 70;
 	else if (keycode == 119)
-		env->camera.y += 10;
+		env->camera.y += 70;
 	else if (keycode == 115)
-		env->camera.y -= 10;
+		env->camera.y -= 70;
+	else if (keycode == 32)
+		env->camera.z += 70;
 	expose_hook(param);
 	return (0);
 }
@@ -73,7 +75,7 @@ static t_env	*env_new(t_pt size, char *name)
 	if (env == NULL || (env->mlx = mlx_init()) == NULL ||
 		(env->win = mlx_new_window(env->mlx, size.x, size.y, name)) == NULL)
 		return (free(env), NULL);
-	env->camera = (t_camera){0.0, 0.0, 10.0, 0.0, 0.0};
+	env->camera = (t_camera){WIDTH / 2, HEIGHT / 2, 10.0, 0.0, 0.0};
 	env->map = ft_arraynew();
 	env->error = NULL;
 	env->project = &project_test;
@@ -85,7 +87,7 @@ int				main(int argc, char **argv)
 	int				fd;
 	t_env			*env;
 
-	env = env_new(PT(600, 480), "Fil de fer");
+	env = env_new(PT(WIDTH, HEIGHT), "Fil de fer");
 	if (argc > 1)
 	{
 		fd = open(argv[1], O_RDONLY);

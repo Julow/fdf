@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "get_next_line.h"
 #include <stdlib.h>
 
 static t_bool	load_pts(t_array *map, char **split, t_pos pos)
