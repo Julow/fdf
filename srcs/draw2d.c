@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "fdf.h"
 
 void			ft_drawrect(t_env *env, t_rect rect, int color)
 {

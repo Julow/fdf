@@ -37,6 +37,23 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 	return (valid);
 }
 
+t_pt			mapoffset(t_array *map)
+{
+	t_pt			max;
+	int				i;
+
+	max = PT(0, map->length);
+	i = -1;
+	while (++i < map->length)
+	{
+		if (((t_array*)map->data[i])->length > max.x)
+			max.x = ((t_array*)map->data[i])->length;
+	}
+	max.x = (WIDTH - (max.x * PT_DIST)) / 2;
+	max.y = (HEIGHT - (max.y * PT_DIST)) / 2;
+	return (max);
+}
+
 t_bool			load_map(int fd, t_array *map)
 {
 	char			*line;

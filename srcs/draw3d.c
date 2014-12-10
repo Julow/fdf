@@ -17,6 +17,8 @@ void			ft_3dput(t_env *env, t_pos pos, int color)
 	t_pt			pt;
 
 	pt = env->project(env, pos);
+	pt.x += env->offset.x;
+	pt.y += env->offset.y;
 	color += (int)(pos.z * 20) << 16;
 	color -= (int)(pos.z * 20) << 8;
 	color -= (int)(pos.z * 20);

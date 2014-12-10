@@ -14,9 +14,14 @@
 
 t_pt			project_test(t_env *env, t_pos pos)
 {
-	t_matrix		matrix;
+	t_pt			pt;
 
-	matrix_reset(&matrix);
-	matrix_rot(&matrix, t);
-	return (PT(ROUND(matrix.m[0]), ROUND(matrix.m[4])));
+	pt.x = ROUND(0.5 * pos.x - 0.75);
+	pt.y = ROUND(-pos.z + (0.5 / 2 * pos.x) + (0.75 / 2 * pos.y));
+/*
+	pt.x = ROUND(pos.x + 0.5);
+	pt.y = ROUND(pos.y + (0.75 / 2 * -pos.z));
+*/
+	(void)env;
+	return (pt);
 }
