@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_stringaddid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 12:20:34 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/03 12:20:37 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/09 23:40:27 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/09 23:40:27 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			*ft_memcpy(void *dst, const void *src, size_t n)
+/*
+** Add the string representation of the integer part of 'nbr'
+*/
+void			ft_stringaddid(t_string *str, double nbr)
 {
-	t_uchar			*dst8;
-	t_ulong			*dst64;
-	t_uchar			*src8;
-	t_ulong			*src64;
+	int				tmp;
+	int				length;
 
-	dst64 = (t_ulong*)dst;
-	src64 = (t_ulong*)src;
-	while (n > 7)
+	length = ((nbr < 0) ? 2 : 1);
+	while ((nbr /= 10) > 1)
+		length++;
+	ft_stringext(str, length);
+	if (nbr < 0)
+		str->content[str->length++] = '-';
+	length += str->length;
+	while (str->length < length)
 	{
-		*(dst64++) = *(src64++);
-		n -= 8;
+		nbr *= 10;
+		tmp = (int)nbr;
+		str->content[str->length++] = '0' + tmp;
+		nbr -= tmp;
 	}
-	dst8 = (t_uchar*)dst64;
-	src8 = (t_uchar*)src64;
-	while (n-- > 0)
-		*(dst8++) = *(src8++);
-	return (dst);
 }
