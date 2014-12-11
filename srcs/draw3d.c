@@ -22,7 +22,7 @@ void			ft_3dput(t_env *env, t_pos pos, int color)
 	color += (int)(pos.z * 20) << 16;
 	color -= (int)(pos.z * 20) << 8;
 	color -= (int)(pos.z * 20);
-	mlx_pixel_put(env->mlx, env->win, pt.x, pt.y, color);
+	ft_drawpt(env->img, pt, color);
 }
 
 void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color)
@@ -31,7 +31,7 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color)
 	double			pts;
 
 	delta = POS(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
-	pts = ft_max(ft_max(ft_abs(delta.x), ft_abs(delta.y)), ft_abs(delta.z));
+	pts = MAX(MAX(ABS(delta.x), ABS(delta.y)), ABS(delta.z)) * 80;
 	delta.x /= pts;
 	delta.y /= pts;
 	delta.z /= pts;

@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   ft_drawpt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/04 16:38:08 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:38:10 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/11 15:51:49 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/11 15:51:49 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "ft_draw.h"
 
-t_pt			project_test(t_env *env, t_pos pos)
+void			ft_drawpt(t_image *img, t_pt pt, int color)
 {
-	t_pt			pt;
-	double const	c1 = 0.5;
-	double const	c2 = 0.75;
+	int				pos;
+	int				i;
 
-	pt.x = ROUND(c1 * pos.x - c2);
-	pt.y = ROUND(-pos.z + (c1 / 2 * pos.x) + (c2 / 2 * pos.y));
-/*
-	pt.x = ROUND(pos.x + c1);
-	pt.y = ROUND(pos.y + (c2 / 2 * -pos.z));
-*/
-	(void)env;
-	return (pt);
+	if (pt.x < 0 || pt.x >= img->width || pt.y < 0 || pt.y >= img->height)
+		return ;
+	pos = (img->width * pt.y + pt.x) * img->opp;
+	i = -1;
+	while (++i < img->opp)
+	{
+		img->data[pos + i] = (t_uchar)color;
+		color = color >> 8;
+	}
 }

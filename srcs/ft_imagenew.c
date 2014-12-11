@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   ft_imagenew.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/04 16:38:08 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:38:10 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/11 16:48:16 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/11 16:48:17 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "ft_draw.h"
+#include <mlx.h>
 
-t_pt			project_test(t_env *env, t_pos pos)
+t_image			*ft_imagenew(void *mlx, int width, int height)
 {
-	t_pt			pt;
-	double const	c1 = 0.5;
-	double const	c2 = 0.75;
+	t_image			*img;
+	int				bpp;
 
-	pt.x = ROUND(c1 * pos.x - c2);
-	pt.y = ROUND(-pos.z + (c1 / 2 * pos.x) + (c2 / 2 * pos.y));
-/*
-	pt.x = ROUND(pos.x + c1);
-	pt.y = ROUND(pos.y + (c2 / 2 * -pos.z));
-*/
-	(void)env;
-	return (pt);
+	img = MAL1(t_image);
+	img->img = mlx_new_image(mlx, width, height);
+	img->data = mlx_get_data_addr(img->img, &bpp, &img->l_size, &img->endian);
+	img->width = width;
+	img->height = height;
+	img->opp = bpp / 8;
+	return (img);
 }

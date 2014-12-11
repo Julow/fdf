@@ -37,21 +37,21 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 	return (valid);
 }
 
-t_pt			mapoffset(t_array *map)
+void			mapoffset(t_env *env)
 {
-	t_pt			max;
+	t_pos			max;
 	int				i;
 
-	max = PT(0, map->length);
+	max = POS(0, env->map->length, 0);
 	i = -1;
-	while (++i < map->length)
+	while (++i < env->map->length)
 	{
-		if (((t_array*)map->data[i])->length > max.x)
-			max.x = ((t_array*)map->data[i])->length;
+		if (((t_array*)env->map->data[i])->length > max.x)
+			max.x = ((t_array*)env->map->data[i])->length;
 	}
-	max.x = (WIDTH - (max.x * PT_DIST)) / 2;
-	max.y = (HEIGHT - (max.y * PT_DIST)) / 2;
-	return (max);
+	env->offset = env->project(env, max);
+	env->offset.x = (WIDTH - (env->offset.x * PT_DIST)) / 2;
+	env->offset.y = (HEIGHT - (env->offset.y * PT_DIST)) / 2;
 }
 
 t_bool			load_map(int fd, t_array *map)

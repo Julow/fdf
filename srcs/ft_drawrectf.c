@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   ft_drawrectf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/04 16:38:08 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:38:10 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/11 14:48:00 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/11 14:48:01 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "ft_draw.h"
 
-t_pt			project_test(t_env *env, t_pos pos)
+void			ft_drawrectf(t_image *img, t_pt p1, t_pt p2, int color)
 {
-	t_pt			pt;
-	double const	c1 = 0.5;
-	double const	c2 = 0.75;
+	t_pt			i;
 
-	pt.x = ROUND(c1 * pos.x - c2);
-	pt.y = ROUND(-pos.z + (c1 / 2 * pos.x) + (c2 / 2 * pos.y));
-/*
-	pt.x = ROUND(pos.x + c1);
-	pt.y = ROUND(pos.y + (c2 / 2 * -pos.z));
-*/
-	(void)env;
-	return (pt);
+	ft_resrect(&p1, &p2);
+	while (p1.y < p2.y)
+	{
+		ft_drawnpt(img, i, p2.x - p1.x, color);
+		p1.y++;
+	}
 }

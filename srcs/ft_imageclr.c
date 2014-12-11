@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   ft_imageclr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/04 16:38:08 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:38:10 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/11 18:28:04 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/11 18:28:05 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "ft_draw.h"
 
-t_pt			project_test(t_env *env, t_pos pos)
+void			ft_imageclr(t_image *img)
 {
-	t_pt			pt;
-	double const	c1 = 0.5;
-	double const	c2 = 0.75;
-
-	pt.x = ROUND(c1 * pos.x - c2);
-	pt.y = ROUND(-pos.z + (c1 / 2 * pos.x) + (c2 / 2 * pos.y));
-/*
-	pt.x = ROUND(pos.x + c1);
-	pt.y = ROUND(pos.y + (c2 / 2 * -pos.z));
-*/
-	(void)env;
-	return (pt);
+	ft_bzero(img->data, img->width * img->height * img->opp);
 }

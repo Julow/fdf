@@ -20,11 +20,12 @@ static int		expose_hook(void *param)
 	t_env			*env;
 
 	env = (t_env*)param;
-	mlx_clear_window(env->mlx, env->win);
 	if (env->error != NULL)
 		mlx_string_put(env->mlx, env->win, 20, 40, 0xCC0000,
 			env->error->content);
+	ft_imageclr(env->img);
 	draw_map(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img->img, 0, 0);
 	return (0);
 }
 
@@ -46,33 +47,13 @@ static int		key_hook(int keycode, void *param)
 	if (keycode == 65307)
 		exit(0);
 	else if (keycode == 65362)
-		env->offset.y -= 15;
+		env->offset.y -= 20;
 	else if (keycode == 65364)
-		env->offset.y += 15;
+		env->offset.y += 20;
 	else if (keycode == 65361)
-		env->offset.x -= 15;
+		env->offset.x -= 20;
 	else if (keycode == 65363)
-		env->offset.x += 15;
-/*
-	else if (keycode == 65361)
-		env->camera.t -= 0.3;
-	else if (keycode == 65363)
-		env->camera.t += 0.3;
-	else if (keycode == 65362)
-		env->camera.p += 0.3;
-	else if (keycode == 65364)
-		env->camera.p -= 0.3;
-	else if (keycode == 97)
-		env->camera.x += 70;
-	else if (keycode == 100)
-		env->camera.x -= 70;
-	else if (keycode == 119)
-		env->camera.y += 70;
-	else if (keycode == 115)
-		env->camera.y -= 70;
-	else if (keycode == 32)
-		env->camera.z += 70;
-*/
+		env->offset.x += 20;
 	expose_hook(param);
 	return (0);
 }
@@ -86,7 +67,7 @@ static t_env	*env_new(t_pt size, char *name)
 		(env->win = mlx_new_window(env->mlx, size.x, size.y, name)) == NULL)
 		return (free(env), NULL);
 	env->offset = PT(0, 0);
-	env->camera = (t_camera){WIDTH / 2, HEIGHT / 2, 10.0, 0.0, 0.0};
+	env->img = ft_imagenew(env->mlx, WIDTH, HEIGHT);
 	env->map = ft_arraynew();
 	env->error = NULL;
 	env->project = &project_test;
@@ -108,7 +89,7 @@ int				main(int argc, char **argv)
 				env->error = ft_stringnews("Error: Bad file.");
 			else if (env->map->length <= 1)
 				env->error = ft_stringnews("Error: The file is too small.");
-			env->offset = mapoffset(env->map);
+			mapoffset(env);
 			close(fd);
 		}
 		else

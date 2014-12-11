@@ -17,74 +17,28 @@
 # include <math.h>
 
 # include "libft.h"
+# include "ft_draw.h"
 
-# define WIDTH		1500
-# define HEIGHT		1200
+# define WIDTH		1200
+# define HEIGHT		920
 
-# define PT_DIST	25.0
-
-# define PT(x,y)	((t_pt){(x), (y)})
-# define POS(x,y,z)	((t_pos){(x), (y), (z)})
-
-# define ROUND(n)	((int)(0.5 + (n)))
-
-typedef struct	s_pt
-{
-	int				x;
-	int				y;
-}				t_pt;
-
-typedef struct	s_rect
-{
-	int				x;
-	int				y;
-	int				width;
-	int				height;
-}				t_rect;
-
-typedef struct	s_pos
-{
-	double			x;
-	double			y;
-	double			z;
-}				t_pos;
-
-typedef struct	s_camera
-{
-	double			x;
-	double			y;
-	double			z;
-	double			t;
-	double			p;
-}				t_camera;
+# define PT_DIST	35.0
 
 typedef struct	s_env
 {
 	void			*mlx;
 	void			*win;
 	t_pt			offset;
-	t_camera		camera;
+	t_image			*img;
 	t_array			*map;
 	t_string		*error;
 	t_pt			(*project)(struct s_env *env, t_pos pos);
 }				t_env;
 
-typedef union	u_color
-{
-	struct s_color
-	{
-		t_uchar			a;
-		t_uchar			r;
-		t_uchar			g;
-		t_uchar			b;
-	}				s;
-	int				i;
-}				t_color;
-
 /*
 ** map.c
 */
-t_pt			mapoffset(t_array *map);
+void			mapoffset(t_env *env);
 t_bool			load_map(int fd, t_array *map);
 void			draw_map(t_env *env);
 
@@ -98,13 +52,5 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2, int color);
 ** project.c
 */
 t_pt			project_test(t_env *env, t_pos pos);
-
-/*
-** utils.c
-*/
-double			ft_distance(t_pos p1, t_pos p2);
-double			ft_distancec(t_camera c, t_pos p2);
-double			ft_abs(double n);
-double			ft_max(double a, double b);
 
 #endif
