@@ -24,14 +24,6 @@
 
 # define ROUND(n)	((int)(0.5 + (n)))
 
-/*
-** Represent an image
-** 'data' the pixels of the image
-** 'img' the mlx image pointer
-** 'width'*'height' the size of the image
-** 'oop' octet per pixel
-** 'endian' TRUE for big and FALSE for small
-*/
 typedef struct	s_image
 {
 	char			*data;
@@ -56,20 +48,9 @@ typedef struct	s_pos
 	double			z;
 }				t_pos;
 
-typedef union	u_color
-{
-	struct s_color
-	{
-		t_uchar			a;
-		t_uchar			r;
-		t_uchar			g;
-		t_uchar			b;
-	}				s;
-	int				i;
-}				t_color;
-
 t_image			*ft_imagenew(void *mlx, int width, int height);
 void			ft_imageclr(t_image *img);
+void			ft_imagekil(void *mlx, t_image *img);
 
 void			ft_resrect(t_pt *p1, t_pt *p2);
 

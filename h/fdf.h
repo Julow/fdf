@@ -35,6 +35,18 @@ typedef struct	s_env
 	t_pt			(*project)(struct s_env *env, t_pos pos);
 }				t_env;
 
+typedef union	u_color
+{
+	struct s_color
+	{
+		t_uchar			a;
+		t_uchar			r;
+		t_uchar			g;
+		t_uchar			b;
+	}				bytes;
+	t_uint			i;
+}				t_color;
+
 /*
 ** map.c
 */
