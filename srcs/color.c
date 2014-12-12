@@ -20,13 +20,13 @@ t_color			atocolor(char *str)
 	i = 0;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	color.bytes.r = ft_atoi(str[i]);
-	while (ft_isdigit(str + i))
+	color.bytes.r = ft_atoi(str + i);
+	while (ft_isdigit(str[i]))
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	color.bytes.g = ft_atoi(str[i]);
-	while (ft_isdigit(str + i))
+	color.bytes.g = ft_atoi(str + i);
+	while (ft_isdigit(str[i]))
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
@@ -38,4 +38,18 @@ t_color			atocolor(char *str)
 	if (str[i] != '\0' && ((color.i = color.i << 8) || TRUE))
 		color.bytes.b = ft_atoi(str + i);
 	return (color);
+}
+
+int				ft_mix(int a, int b, double pos)
+{
+	return (a - (a * pos) + (b * pos));
+}
+
+double			ft_pos(int min, int max, int pos)
+{
+	if (pos <= min || pos >= max)
+		return ((pos <= min) ? 0.0 : 1.0);
+	if (min < 0)
+		return ((double)(pos - min) / (double)(max - min));
+	return ((double)(pos + min) / (double)(max + min));
 }

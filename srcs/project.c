@@ -20,10 +20,6 @@ t_pt			project_test(t_env *env, t_pos pos)
 
 	pt.x = ROUND(c1 * pos.x - c2);
 	pt.y = ROUND(-pos.z + (c1 / 2 * pos.x) + (c2 / 2 * pos.y));
-/*
-	pt.x = ROUND(pos.x + c1);
-	pt.y = ROUND(pos.y + (c2 / 2 * -pos.z));
-*/
 	(void)env;
 	return (pt);
 }

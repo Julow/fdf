@@ -22,7 +22,9 @@
 # define PT(x,y)	((t_pt){(x), (y)})
 # define POS(x,y,z)	((t_pos){(x), (y), (z)})
 
+# define UP(n)		((int)(1 + (n)))
 # define ROUND(n)	((int)(0.5 + (n)))
+# define DOWN(n)	((int)(n))
 
 typedef struct	s_image
 {

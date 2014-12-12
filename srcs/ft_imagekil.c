@@ -12,6 +12,7 @@
 
 #include "ft_draw.h"
 #include <mlx.h>
+#include <stdlib.h>
 
 void			ft_imagekil(void *mlx, t_image *img)
 {

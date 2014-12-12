@@ -14,5 +14,5 @@
 
 void			ft_imageclr(t_image *img)
 {
-	ft_bzero(img->data, img->width * img->height * img->opp);
+	ft_memset(img->data, 0, img->width * img->height * img->opp);
 }

@@ -14,10 +14,10 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-static t_bool	load_pts(t_array *map, char **split, t_pos pos)
+static t_bool	load_pts(t_env *env, t_array *line, char **split)
 {
 	int				i;
-	t_pos			*tmp;
+	double			*tmp;
 	t_bool			valid;
 
 	valid = TRUE;
@@ -26,15 +26,20 @@ static t_bool	load_pts(t_array *map, char **split, t_pos pos)
 	{
 		if (!ft_isnumber(split[i]))
 			valid = FALSE;
-		pos.z = ft_atod(split[i]);
-		tmp = MAL1(t_pos);
-		*tmp = pos;
-		ft_arrayadd(map, tmp);
-		pos.x += PT_DIST;
+		tmp = MAL1(double);
+		*tmp = ft_atod(split[i]);
+		env->max_z = MAX(env->max_z, *tmp);
+		env->min_z = MIN(env->min_z, *tmp);
+		ft_arrayadd(line, tmp);
 		free(split[i]);
 	}
 	free(split);
 	return (valid);
+}
+
+void			maplinekill(void *line)
+{
+	ft_arraykil(line, &free);
 }
 
 void			mapoffset(t_env *env)
@@ -50,26 +55,28 @@ void			mapoffset(t_env *env)
 			max.x = ((t_array*)env->map->data[i])->length;
 	}
 	env->offset = env->project(env, max);
-	env->offset.x = (WIDTH - (env->offset.x * PT_DIST)) / 2;
-	env->offset.y = (HEIGHT - (env->offset.y * PT_DIST)) / 2;
+	env->pt_dist = DEF_PTDIST;
+	if ((env->offset.x * env->pt_dist) > WIDTH)
+		env->pt_dist = (WIDTH) / env->offset.x;
+	if ((env->offset.y * env->pt_dist) > HEIGHT)
+		env->pt_dist = (HEIGHT) / env->offset.y;
+	env->offset.x = (WIDTH - (env->offset.x * env->pt_dist)) / 2;
+	env->offset.y = (HEIGHT - (env->offset.y * env->pt_dist)) / 2;
 }
 
-t_bool			load_map(int fd, t_array *map)
+t_bool			load_map(int fd, t_env *env)
 {
 	char			*line;
 	t_array			*tmp;
-	t_pos			pos;
 	t_bool			valid;
 
-	pos = POS(0.0, 0.0, 0.0);
 	valid = TRUE;
 	while (get_next_line(fd, &line) > 0)
 	{
 		tmp = ft_arraynew();
-		if (!load_pts(tmp, ft_strsplit(line, ' '), pos))
+		if (!load_pts(env, tmp, ft_strsplit(line, ' ')))
 			valid = FALSE;
-		ft_arrayadd(map, tmp);
-		pos.y += PT_DIST;
+		ft_arrayadd(env->map, tmp);
 		free(line);
 	}
 	return (valid);
@@ -77,27 +84,23 @@ t_bool			load_map(int fd, t_array *map)
 
 void			draw_map(t_env *env)
 {
-	int				i;
-	int				j;
+	t_pt			pt;
+	t_pos			pos;
 	t_array			*tmp;
-	t_array			*tmp2;
 
-	i = -1;
-	while (++i < env->map->length)
+	pt = PT(0, -1);
+	while (++pt.y < env->map->length && (pt.x = -1) == -1)
 	{
-		tmp = (t_array*)env->map->data[i];
-		j = -1;
-		while (++j < tmp->length)
+		tmp = (t_array*)env->map->data[pt.y];
+		while (++pt.x < tmp->length)
 		{
-			if (j + 1 < tmp->length)
-				draw3d_line(env, *((t_pos*)tmp->data[j]),
-					*((t_pos*)tmp->data[j + 1]), 0x00FFFF);
-			if (i > 0 && j < ((t_array*)env->map->data[i - 1])->length)
-			{
-				tmp2 = (t_array*)env->map->data[i - 1];
-				draw3d_line(env, *((t_pos*)tmp->data[j]),
-					*((t_pos*)tmp2->data[j]), 0x00FFFF);
-			}
+			pos = POS(pt.x, pt.y, *((double*)tmp->data[pt.x]));
+			if (pt.x + 1 < tmp->length)
+				draw3d_line(env, pos, POS(pt.x + 1, pt.y,
+					*((double*)tmp->data[pt.x + 1])));
+			if (pt.y > 0 && pt.x < ((t_array*)env->map->data[pt.y - 1])->length)
+				draw3d_line(env, pos, POS(pt.x, pt.y - 1,
+					*((double*)(((t_array*)env->map->data[pt.y - 1])->data[pt.x]))));
 		}
 	}
 }
