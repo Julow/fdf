@@ -50,7 +50,7 @@ typedef struct	s_env
 
 typedef union	u_color
 {
-	struct s_color
+	struct			s_color
 	{
 		t_uchar			b;
 		t_uchar			g;

@@ -33,7 +33,7 @@ static t_bool	load_pts(t_env *env, t_array *pts, char *line)
 		ft_arrayadd(pts, tmp);
 		while (!ft_iswhite(line[i]) && line[i] != '\0')
 		{
-			if (!ft_isdigit(line[i]))
+			if (!ft_isdigit(line[i]) && line[i] != '-' && line[i] != '+')
 				valid = FALSE;
 			i++;
 		}
@@ -105,8 +105,8 @@ void			draw_map(t_env *env)
 				draw3d_line(env, pos, POS(pt.x + 1, pt.y,
 					*((double*)tmp->data[pt.x + 1])));
 			if (pt.y > 0 && pt.x < ((t_array*)env->map->data[pt.y - 1])->length)
-				draw3d_line(env, pos, POS(pt.x, pt.y - 1,
-					*((double*)(((t_array*)env->map->data[pt.y - 1])->data[pt.x]))));
+				draw3d_line(env, pos, POS(pt.x, pt.y - 1, *((double*)((
+					(t_array*)env->map->data[pt.y - 1])->data[pt.x]))));
 		}
 	}
 }

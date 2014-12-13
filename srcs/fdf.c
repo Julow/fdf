@@ -35,12 +35,6 @@ static void		env_kill(t_env *env)
 	exit(0);
 }
 
-/*
-** Up: 65362
-** Down: 65364
-** left: 65361
-** right: 65363
-*/
 static int		key_hook(int keycode, void *param)
 {
 	if (keycode == 65307)
@@ -75,24 +69,17 @@ int				main(int argc, char **argv)
 	t_env			*env;
 
 	env = env_new(PT(WIDTH, HEIGHT), "Fil de fer");
-	if (argc > 1)
-	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd >= 0)
-		{
-			if (!load_map(fd, env))
-				ft_putstr_fd("Warning: File contains error.\n", 2);
-			else if (env->map->length <= 0
-				|| ((t_array*)env->map->data[0])->length <= 1)
-				error("Error: The file is too small.\n");
-			mapoffset(env);
-			close(fd);
-		}
-		else
-			error("Error: File not found.\n");
-	}
-	else
+	if (argc <= 1)
 		error("Error: No file specified.\n");
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		error("Error: File not found.\n");
+	if (!load_map(fd, env))
+		ft_putstr_fd("Warning: File contains error.\n", 2);
+	if (env->map->length <= 0 || ((t_array*)env->map->data[0])->length <= 1)
+		ft_putstr_fd("Warning: The file is too small.\n", 2);
+	mapoffset(env);
+	close(fd);
 	env->gradient = gradientnew((argc > 2) ? argv[2] : DEF_COLORS);
 	mlx_expose_hook(env->win, &expose_hook, env);
 	mlx_key_hook(env->win, &key_hook, env);
