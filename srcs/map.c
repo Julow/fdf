@@ -14,26 +14,32 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-static t_bool	load_pts(t_env *env, t_array *line, char **split)
+static t_bool	load_pts(t_env *env, t_array *pts, char *line)
 {
 	int				i;
 	double			*tmp;
 	t_bool			valid;
 
 	valid = TRUE;
-	i = -1;
-	while (split[++i] != NULL)
+	i = 0;
+	while (ft_iswhite(line[i]))
+		i++;
+	while (line[i] != '\0')
 	{
-		if (!ft_isnumber(split[i]))
-			valid = FALSE;
 		tmp = MAL1(double);
-		*tmp = ft_atod(split[i]);
+		*tmp = ft_atod(line + i);
 		env->max_z = MAX(env->max_z, *tmp);
 		env->min_z = MIN(env->min_z, *tmp);
-		ft_arrayadd(line, tmp);
-		free(split[i]);
+		ft_arrayadd(pts, tmp);
+		while (!ft_iswhite(line[i]) && line[i] != '\0')
+		{
+			if (!ft_isdigit(line[i]))
+				valid = FALSE;
+			i++;
+		}
+		while (ft_iswhite(line[i]))
+			i++;
 	}
-	free(split);
 	return (valid);
 }
 
@@ -54,12 +60,12 @@ void			mapoffset(t_env *env)
 		if (((t_array*)env->map->data[i])->length > max.x)
 			max.x = ((t_array*)env->map->data[i])->length;
 	}
-	env->offset = env->project(env, max);
+	env->offset = env->project(max);
 	env->pt_dist = DEF_PTDIST;
-	if ((env->offset.x * env->pt_dist) > WIDTH)
-		env->pt_dist = (WIDTH) / env->offset.x;
-	if ((env->offset.y * env->pt_dist) > HEIGHT)
-		env->pt_dist = (HEIGHT) / env->offset.y;
+	if ((env->offset.x * env->pt_dist) > (WIDTH - MARGIN))
+		env->pt_dist = (WIDTH - MARGIN) / env->offset.x;
+	if ((env->offset.y * env->pt_dist) > (HEIGHT - MARGIN))
+		env->pt_dist = (HEIGHT - MARGIN) / env->offset.y;
 	env->offset.x = (WIDTH - (env->offset.x * env->pt_dist)) / 2;
 	env->offset.y = (HEIGHT - (env->offset.y * env->pt_dist)) / 2;
 }
@@ -74,7 +80,7 @@ t_bool			load_map(int fd, t_env *env)
 	while (get_next_line(fd, &line) > 0)
 	{
 		tmp = ft_arraynew();
-		if (!load_pts(env, tmp, ft_strsplit(line, ' ')))
+		if (!load_pts(env, tmp, line))
 			valid = FALSE;
 		ft_arrayadd(env->map, tmp);
 		free(line);

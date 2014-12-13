@@ -18,7 +18,7 @@ void			ft_3dput(t_env *env, t_pos pos)
 
 	pos.x *= env->pt_dist;
 	pos.y *= env->pt_dist;
-	pt = env->project(env, pos);
+	pt = env->project(pos);
 	pt.x += env->offset.x;
 	pt.y += env->offset.y;
 	ft_drawpt(env->img, pt, gradientget(env->gradient,
@@ -31,7 +31,7 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2)
 	double			pts;
 
 	delta = POS(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
-	pts = MAX(MAX(ABS(delta.x), ABS(delta.y)), ABS(delta.z)) * env->pt_dist;
+	pts = MAX(MAX(ABS(delta.x), ABS(delta.y)) * env->pt_dist, ABS(delta.z));
 	delta.x /= pts;
 	delta.y /= pts;
 	delta.z /= pts;

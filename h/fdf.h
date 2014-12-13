@@ -15,20 +15,21 @@
 
 # include <mlx.h>
 # include <math.h>
-#    include <stdio.h>
 
 # include "libft.h"
 # include "ft_draw.h"
 
-# define WIDTH		1200
-# define HEIGHT		920
+# define WIDTH		1500
+# define HEIGHT		1200
+
+# define MARGIN		250
 
 # define DEF_COLORS	"255,0,0 ; 255,100,0"
 # define DEF_PTDIST	50
 
 /*
 ** Cool gradients:
-** Island : 0,23,194 ; 255,210,87 ; 21,168,67 ; 65,52,27 ; 251,248,244
+** Island : 0,23,194 ; 255,210,87 ; 21,168,67 ; 65,52,27 ; 255,255,255
 ** Mars : 255,0,0 ; 255,100,0
 ** 42 : 120,120,120 ; 195,180,96 ; 102,55,109
 */
@@ -44,8 +45,7 @@ typedef struct	s_env
 	double			pt_dist;
 	double			max_z;
 	double			min_z;
-	t_string		*error;
-	t_pt			(*project)(struct s_env *env, t_pos pos);
+	t_pt			(*project)(t_pos);
 }				t_env;
 
 typedef union	u_color
@@ -77,20 +77,22 @@ void			draw3d_line(t_env *env, t_pos p1, t_pos p2);
 /*
 ** project.c
 */
-t_pt			project_test(t_env *env, t_pos pos);
+t_pt			project_para(t_pos pos);
+t_pt			project_iso(t_pos pos);
 
 /*
 ** color.c
 */
-t_color			atocolor(char *str);
-int				ft_mix(int a, int b, double pos);
-double			ft_pos(int min, int max, int pos);
-
-/*
-** gradient.c
-*/
 t_color			gradientget(t_array *gradient, double pos);
 void			gradientkil(t_array *gradient);
 t_array			*gradientnew(char *input);
+t_color			atocolor(char *str);
+
+/*
+** utils.c
+*/
+void			error(char *str);
+int				ft_mix(int a, int b, double pos);
+double			ft_pos(int min, int max, int pos);
 
 #endif

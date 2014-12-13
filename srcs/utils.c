@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/04 16:38:08 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:38:10 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/13 17:23:09 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/13 17:23:09 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdlib.h>
 
-t_pt			project_para(t_pos pos)
+void			error(char *str)
 {
-	t_pt			pt;
-
-	pt.x = ROUND(pos.x + -3 * pos.z);
-	pt.y = ROUND(pos.y + -1.5 * pos.z);
-	return (pt);
+	ft_putstr_fd(str, 2);
+	exit(1);
 }
 
-t_pt			project_iso(t_pos pos)
+int				ft_mix(int a, int b, double pos)
 {
-	t_pt			pt;
+	return (a - (a * pos) + (b * pos));
+}
 
-	pt.x = ROUND(0.6 * pos.x - 0.6 * pos.y);
-	pt.y = ROUND(-pos.z + 0.3 * pos.x + 0.3 * pos.y);
-	return (pt);
+double			ft_pos(int min, int max, int pos)
+{
+	if (pos <= min || pos >= max)
+		return ((pos <= min) ? 0.0 : 1.0);
+	if (min < 0)
+		return ((double)(pos - min) / (double)(max - min));
+	return ((double)(pos + min) / (double)(max + min));
 }
