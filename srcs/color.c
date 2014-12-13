@@ -27,10 +27,10 @@ t_color			gradientget(t_array *gradient, double pos)
 	tmp1 = gradient->data[DOWN(pos)];
 	tmp2 = gradient->data[UP(pos)];
 	pos = (pos - DOWN(pos)) / (gradient->length - 1) * 2;
-	c.bytes.a = ft_mix(tmp1->bytes.a, tmp2->bytes.a, pos);
-	c.bytes.r = ft_mix(tmp1->bytes.r, tmp2->bytes.r, pos);
-	c.bytes.g = ft_mix(tmp1->bytes.g, tmp2->bytes.g, pos);
-	c.bytes.b = ft_mix(tmp1->bytes.b, tmp2->bytes.b, pos);
+	c.b.a = ft_mix(tmp1->b.a, tmp2->b.a, pos);
+	c.b.r = ft_mix(tmp1->b.r, tmp2->b.r, pos);
+	c.b.g = ft_mix(tmp1->b.g, tmp2->b.g, pos);
+	c.b.b = ft_mix(tmp1->b.b, tmp2->b.b, pos);
 	return (c);
 }
 
@@ -74,22 +74,22 @@ t_color			atocolor(char *str)
 	i = 0;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	color.bytes.r = ft_atoi(str + i);
+	color.b.r = ft_atoi(str + i);
 	while (ft_isdigit(str[i]))
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	color.bytes.g = ft_atoi(str + i);
+	color.b.g = ft_atoi(str + i);
 	while (ft_isdigit(str[i]))
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	color.bytes.b = ft_atoi(str + i);
+	color.b.b = ft_atoi(str + i);
 	while (ft_isdigit(str[i]))
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
 	if (str[i] != '\0' && ((color.i = color.i << 8) || TRUE))
-		color.bytes.b = ft_atoi(str + i);
+		color.b.b = ft_atoi(str + i);
 	return (color);
 }

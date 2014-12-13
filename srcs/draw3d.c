@@ -22,7 +22,7 @@ void			ft_3dput(t_env *env, t_pos pos)
 	pt.x += env->offset.x;
 	pt.y += env->offset.y;
 	ft_drawpt(env->img, pt, gradientget(env->gradient,
-		ft_pos(env->min_z, env->max_z, pos.z)).i);
+		ft_pos(env->min_z, env->max_z, pos.z)));
 }
 
 void			draw3d_line(t_env *env, t_pos p1, t_pos p2)
