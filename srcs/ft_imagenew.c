@@ -10,19 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_draw.h"
-#include <mlx.h>
+#include "fdf.h"
 
-t_image			*ft_imagenew(void *mlx, int width, int height)
+t_image			*ft_imagenew(void *mlx, t_pt size)
 {
 	t_image			*img;
 	int				bpp;
 
 	img = MAL1(t_image);
-	img->img = mlx_new_image(mlx, width, height);
+	img->img = mlx_new_image(mlx, size.x, size.y);
 	img->data = mlx_get_data_addr(img->img, &bpp, &img->l_size, &img->endian);
-	img->width = width;
-	img->height = height;
+	img->width = size.x;
+	img->height = size.y;
 	img->opp = bpp / 8;
 	return (img);
 }

@@ -54,7 +54,7 @@ static t_env	*env_new(t_pt size, char *name)
 		error("Error: mlx_init: Fail\n");
 	}
 	env->offset = PT(0, 0);
-	env->img = ft_imagenew(env->mlx, WIDTH, HEIGHT);
+	env->img = ft_imagenew(env->mlx, PT(WIDTH, HEIGHT));
 	env->map = ft_arraynew();
 	env->gradient = NULL;
 	env->max_z = 0;

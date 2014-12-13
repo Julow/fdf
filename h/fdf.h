@@ -48,18 +48,6 @@ typedef struct	s_env
 	t_pt			(*project)(t_pos);
 }				t_env;
 
-typedef union	u_color
-{
-	struct			s_color
-	{
-		t_uchar			b;
-		t_uchar			g;
-		t_uchar			r;
-		t_uchar			a;
-	}				bytes;
-	t_uint			i;
-}				t_color;
-
 /*
 ** map.c
 */
@@ -94,5 +82,11 @@ t_color			atocolor(char *str);
 void			error(char *str);
 int				ft_mix(int a, int b, double pos);
 double			ft_pos(int min, int max, int pos);
+
+/*
+** ft_image
+*/
+t_image			*ft_imagenew(void *mlx, t_pt size);
+void			ft_imagekil(void *mlx, t_image *img);
 
 #endif
