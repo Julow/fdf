@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabins.c                                        :+:      :+:    :+:   */
+/*   ft_match.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/14 22:04:47 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/14 22:04:47 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/15 15:04:25 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/15 15:04:26 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_tabins(t_tab *tab, void *ins, int index, int n)
+t_bool			ft_match(char *str, char *pattern)
 {
-	if (index >= tab->length)
-	{
-		ft_tabset(tab, ins, index, n);
-		return ;
-	}
-	ft_tabext(tab, n);
-	index *= tab->size;
-	tab->length += n;
-	n *= tab->size;
-	ft_memmove(tab->data + index + n, tab->data + index, tab->bytes - index);
-	ft_memmove(tab->data + index, ins, n);
-	tab->bytes += n;
+	if (*str == '\0' && *pattern == '*')
+		return (ft_match(str, pattern + 1));
+	if (*str == '\0' || *pattern == '\0')
+		return ((*str == '\0' && *pattern == '\0') ? 1 : 0);
+	if (*pattern == '*')
+		return (ft_match(str, pattern + 1) | ft_match(str + 1, pattern));
+	return ((*str == *pattern) ? ft_match(str + 1, pattern + 1) : 0);
 }
