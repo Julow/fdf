@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringaddcn.c                                   :+:      :+:    :+:   */
+/*   ft_tabfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/22 18:59:32 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/22 18:59:34 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/14 22:05:07 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/14 22:05:07 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void			ft_stringaddcn(t_string *str, char c, int n)
+void			ft_tabfree(t_tab *tab)
 {
-	char			chars[n];
-	int				i;
+	t_byte			*tmp;
 
-	ft_stringext(str, n);
-	i = -1;
-	while (++i < n)
-		chars[i] = c;
-	ft_stringaddl(str, chars, n);
+	if (tab->bytes >= tab->alloc_bytes)
+		return ;
+	tmp = MAL(t_byte, tab->bytes);
+	tab->alloc_bytes = tab->bytes;
+	if (tab->data != NULL)
+	{
+		ft_memcpy(tmp, tab->data, tab->bytes);
+		free(tab->data);
+	}
+	else
+		ft_bzero(tmp, tab->bytes);
+	tab->data = tmp;
 }
