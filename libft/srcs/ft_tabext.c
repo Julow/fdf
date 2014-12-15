@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_drawpt.c                                        :+:      :+:    :+:   */
+/*   ft_tabext.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/11 15:51:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 15:51:49 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/14 22:05:38 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/14 22:05:38 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void			ft_drawpt(t_image *img, t_pt pt, t_color color)
+void			ft_tabext(t_tab *tab, int need)
 {
-	int				pos;
-	int				i;
+	t_byte			*tmp;
+	int				len;
 
-	if (pt.x < 0 || pt.x >= img->width || pt.y < 0 || pt.y >= img->height)
+	need = need * tab->size + tab->bytes;
+	len = tab->alloc_bytes;
+	if (need < len)
 		return ;
-	pos = (img->width * pt.y + pt.x) * img->opp;
-	i = -1;
-	while (++i < img->opp)
+	while (need >= len)
+		len += 24 * tab->size;
+	tmp = MAL(t_byte, len);
+	tab->alloc_bytes = len;
+	if (tab->data != NULL)
 	{
-		img->data[pos + i] = color.b.b;
-		color.i = color.i >> 8;
+		ft_memcpy(tmp, tab->data, tab->bytes);
+		ft_bzero(tmp + tab->bytes, len - tab->bytes);
+		free(tab->data);
 	}
+	else
+		ft_bzero(tmp, len);
+	tab->data = tmp;
 }

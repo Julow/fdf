@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringaddcn.c                                   :+:      :+:    :+:   */
+/*   ft_tabrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/22 18:59:32 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/22 18:59:34 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/14 22:05:25 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/14 22:05:25 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringaddcn(t_string *str, char c, int n)
+void			ft_tabrev(t_tab *tab)
 {
-	char			chars[n];
 	int				i;
+	const int		middle = tab->length / 2;
 
-	ft_stringext(str, n);
 	i = -1;
-	while (++i < n)
-		chars[i] = c;
-	ft_stringaddl(str, chars, n);
+	while (++i < middle)
+		ft_tabswap(tab, i, tab->length - i - 1);
 }

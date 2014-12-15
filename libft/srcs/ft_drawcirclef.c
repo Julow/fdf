@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_drawcircle.c                                    :+:      :+:    :+:   */
+/*   ft_drawcirclef.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/11 14:48:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 14:48:14 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/14 02:01:06 by juloo             #+#    #+#             */
+/*   Updated: 2014/12/14 02:01:06 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_drawcircle(t_image *img, t_pt o, int radius, t_color color)
+void			ft_drawcirclef(t_image *img, t_pt o, int radius, t_color color)
 {
 	t_pt			pt;
 	int				err;
@@ -21,10 +21,10 @@ void			ft_drawcircle(t_image *img, t_pt o, int radius, t_color color)
 	err = 2 - (2 * radius);
 	while (pt.x <= 0)
 	{
-		ft_drawxy(img, o.x - pt.x, o.y + pt.y, color);
-		ft_drawxy(img, o.x - pt.y, o.y - pt.x, color);
-		ft_drawxy(img, o.x + pt.x, o.y - pt.y, color);
-		ft_drawxy(img, o.x + pt.y, o.y + pt.x, color);
+		ft_drawnpt(img, PT(o.x, o.y + pt.y), -pt.x, color);
+		ft_drawnpt(img, PT(o.x - pt.y, o.y - pt.x), pt.y, color);
+		ft_drawnpt(img, PT(o.x + pt.x, o.y - pt.y), -pt.x, color);
+		ft_drawnpt(img, PT(o.x, o.y + pt.x), pt.y, color);
 		radius = err;
 		if (radius <= pt.y)
 		{

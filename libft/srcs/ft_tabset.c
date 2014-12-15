@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringaddcn.c                                   :+:      :+:    :+:   */
+/*   ft_tabset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/22 18:59:32 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/22 18:59:34 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/14 22:04:44 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/14 22:04:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringaddcn(t_string *str, char c, int n)
+void			ft_tabset(t_tab *tab, t_byte *set, int index, int n)
 {
-	char			chars[n];
-	int				i;
-
-	ft_stringext(str, n);
-	i = -1;
-	while (++i < n)
-		chars[i] = c;
-	ft_stringaddl(str, chars, n);
+	if ((index + n) > tab->length)
+	{
+		ft_tabext(tab, index + n - tab->length);
+		tab->length += index + n - tab->length;
+		tab->bytes = tab->length * tab->size;
+	}
+	ft_memmove(tab->data + (index * tab->size), set, n * tab->size);
 }
