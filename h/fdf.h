@@ -17,7 +17,6 @@
 # include <math.h>
 
 # include "libft.h"
-# include "ft_draw.h"
 
 # define WIDTH		1500
 # define HEIGHT		1200
@@ -51,7 +50,6 @@ typedef struct	s_env
 /*
 ** map.c
 */
-void			maplinekill(void *line);
 void			mapoffset(t_env *env);
 t_bool			load_map(int fd, t_env *env);
 void			draw_map(t_env *env);

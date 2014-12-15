@@ -30,7 +30,7 @@ static void		env_kill(t_env *env)
 {
 	mlx_destroy_window(env->mlx, env->win);
 	ft_imagekil(env->mlx, env->img);
-	ft_arraykil(env->map, &maplinekill);
+	ft_arraykil(env->map, &ft_tabkil);
 	ft_arraykil(env->gradient, &free);
 	exit(0);
 }
