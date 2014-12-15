@@ -41,26 +41,42 @@ static t_bool	load_pts(t_env *env, t_tab *pts, char *line)
 	return (valid);
 }
 
+static void		get_maxmin(t_env *env, t_pt *max, t_pt *min)
+{
+	t_pt			i;
+	t_pt			tmp;
+
+	*max = PT(0, 0);
+	*min = PT(WIDTH, HEIGHT);
+	i = PT(-1, -1);
+	while (++i.y < env->map->length)
+	{
+		i.x = AG(t_tab*, env->map, i.y)->length;
+		tmp = env->project(POS(i.x, i.y, 0));
+		max->x = MAX(max->x, tmp.x);
+		max->y = MAX(max->y, tmp.y);
+		tmp = env->project(POS(0, i.y, 0));
+		min->x = MIN(min->x, tmp.x);
+		min->y = MIN(min->y, tmp.y);
+	}
+}
+
 void			mapoffset(t_env *env)
 {
-	t_pos			max;
-	int				i;
+	t_pt			max;
+	t_pt			min;
+	const t_pt		first = env->project(POS(0, 0, 0));
 
-	max = POS(0, env->map->length, 0);
-	i = -1;
-	while (++i < env->map->length)
-	{
-		if (((t_tab*)env->map->data[i])->length > max.x)
-			max.x = ((t_tab*)env->map->data[i])->length;
-	}
-	env->offset = env->project(max);
+	get_maxmin(env, &max, &min);
 	env->pt_dist = DEF_PTDIST;
-	if ((env->offset.x * env->pt_dist) > (WIDTH - MARGIN))
-		env->pt_dist = (WIDTH - MARGIN) / env->offset.x;
-	if ((env->offset.y * env->pt_dist) > (HEIGHT - MARGIN))
-		env->pt_dist = (HEIGHT - MARGIN) / env->offset.y;
-	env->offset.x = (WIDTH - (env->offset.x * env->pt_dist)) / 2;
-	env->offset.y = (HEIGHT - (env->offset.y * env->pt_dist)) / 2;
+	if (((max.x - min.x) * env->pt_dist) > WIDTH)
+		env->pt_dist *= WIDTH / (env->pt_dist * (max.x - min.x));
+	if (((max.y - min.y) * env->pt_dist) > HEIGHT)
+		env->pt_dist *= HEIGHT / (env->pt_dist * (max.y - min.y));
+	env->offset.x = (WIDTH - ((max.x - min.x + first.x) * env->pt_dist)) / 2;
+	env->offset.y = (HEIGHT - ((max.y - min.y + first.y) * env->pt_dist)) / 2;
+	env->offset.x += (first.x - min.x) * env->pt_dist;
+	env->offset.y += (first.y - min.y) * env->pt_dist;
 }
 
 t_bool			load_map(int fd, t_env *env)
@@ -93,13 +109,13 @@ void			draw_map(t_env *env)
 		tmp = AG(t_tab*, env->map, pt.y);
 		while (++pt.x < tmp->length)
 		{
-			pos = POS(pt.x, pt.y, TGET(double, tmp, pt.x));
+			pos = POS(pt.x, pt.y, TG(double, tmp, pt.x));
 			if (pt.x + 1 < tmp->length)
 				draw3d_line(env, pos, POS(pt.x + 1, pt.y,
-					TGET(double, tmp, pt.x + 1)));
+					TG(double, tmp, pt.x + 1)));
 			if (pt.y > 0 && pt.x < AG(t_tab*, env->map, pt.y - 1)->length)
 				draw3d_line(env, pos, POS(pt.x, pt.y - 1,
-					TGET(double, AG(t_tab*, env->map, pt.y - 1), pt.x)));
+					TG(double, AG(t_tab*, env->map, pt.y - 1), pt.x)));
 		}
 	}
 }

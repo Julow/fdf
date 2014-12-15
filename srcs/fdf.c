@@ -76,8 +76,8 @@ int				main(int argc, char **argv)
 		error("Error: File not found.\n");
 	if (!load_map(fd, env))
 		ft_putstr_fd("Warning: File contains error.\n", 2);
-	if (env->map->length <= 0 || ((t_array*)env->map->data[0])->length <= 1)
-		ft_putstr_fd("Warning: The file is too small.\n", 2);
+	if (env->map->length <= 0)
+		error("Error: The file is too small.\n");
 	mapoffset(env);
 	close(fd);
 	env->gradient = gradientnew((argc > 2) ? argv[2] : DEF_COLORS);

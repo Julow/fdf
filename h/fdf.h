@@ -18,13 +18,11 @@
 
 # include "libft.h"
 
-# define WIDTH		1500
-# define HEIGHT		1200
-
-# define MARGIN		250
+# define WIDTH		2560
+# define HEIGHT		1400
 
 # define DEF_COLORS	"255,0,0 ; 255,100,0"
-# define DEF_PTDIST	50
+# define DEF_PTDIST	70
 
 /*
 ** Cool gradients:
