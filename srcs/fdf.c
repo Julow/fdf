@@ -20,8 +20,7 @@ static int		expose_hook(void *param)
 	t_env			*env;
 
 	env = (t_env*)param;
-	ft_imageclr(env->img);
-	draw_map(env);
+	mlx_string_put(env->mlx, env->win, 50, 80, 0xFFFFFF, "Expose.");
 	mlx_put_image_to_window(env->mlx, env->win, env->img->img, 0, 0);
 	return (0);
 }
@@ -57,9 +56,12 @@ static t_env	*env_new(t_pt size, char *name)
 	env->img = ft_imagenew(env->mlx, PT(WIDTH, HEIGHT));
 	env->map = ft_arraynew();
 	env->gradient = NULL;
+	env->loaded = FALSE;
 	env->max_z = 0;
 	env->min_z = 0;
 	env->project = &project_iso;
+	mlx_expose_hook(env->win, &expose_hook, env);
+	mlx_key_hook(env->win, &key_hook, env);
 	return (env);
 }
 
@@ -68,12 +70,12 @@ int				main(int argc, char **argv)
 	int				fd;
 	t_env			*env;
 
-	env = env_new(PT(WIDTH, HEIGHT), "Fil de fer");
 	if (argc <= 1)
 		error("Error: No file specified.\n");
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error("Error: File not found.\n");
+	env = env_new(PT(WIDTH, HEIGHT), "Fil de fer");
 	if (!load_map(fd, env))
 		ft_putstr_fd("Warning: File contains error.\n", 2);
 	if (env->map->length <= 0)
@@ -81,8 +83,8 @@ int				main(int argc, char **argv)
 	mapoffset(env);
 	close(fd);
 	env->gradient = gradientnew((argc > 2) ? argv[2] : DEF_COLORS);
-	mlx_expose_hook(env->win, &expose_hook, env);
-	mlx_key_hook(env->win, &key_hook, env);
+	ft_imageclr(env->img);
+	draw_map(env);
 	mlx_loop(env->mlx);
 	return (0);
 }

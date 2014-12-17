@@ -39,6 +39,7 @@ typedef struct	s_env
 	t_image			*img;
 	t_array			*gradient;
 	t_array			*map;
+	t_bool			loaded;
 	double			pt_dist;
 	double			max_z;
 	double			min_z;
