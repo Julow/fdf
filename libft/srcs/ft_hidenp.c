@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringaddcn.c                                   :+:      :+:    :+:   */
+/*   ft_hidenp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/22 18:59:32 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/22 18:59:34 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/16 22:55:17 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/16 22:55:17 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_stringaddcn(t_string *str, char c, int n)
+t_bool			ft_hidenp(char *hide, char *str)
 {
-	char			chars[n];
-	int				i;
-
-	if (n < 0)
-		return ;
-	i = -1;
-	while (++i < n)
-		chars[i] = c;
-	ft_stringaddl(str, chars, n);
+	while (*(str++) != '\0')
+		if (*hide == *str)
+			hide++;
+	return ((*hide == '\0') ? TRUE : FALSE);
 }
