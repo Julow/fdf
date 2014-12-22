@@ -26,16 +26,27 @@ C_FILES = $(shell ls -1 $(C_DIR) | grep "\.c")
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
 all:
-	@(if [ "$(DEBUG)" -eq "1" ]; then make -C $(LIBFT) debug; else make -C $(LIBFT); fi || (echo "\033[0;31m$(LIBFT)\033[0;0m" && exit 1)) | grep -v "Nothing to be done" || echo "" > /dev/null
-	@if [ "$(DEBUG)" -eq "1" ]; then make -j3 _debug $(NAME); else make -j3 $(NAME); fi
+	@(if [ "$(DEBUG)" -eq "1" ]; then \
+		make -C $(LIBFT) debug; else \
+		make -C $(LIBFT); fi \
+		|| (echo "\033[0;31m$(LIBFT)\033[0;0m" && exit 1)) \
+	| grep -v "Nothing to be done" || echo "" > /dev/null
+	@if [ "$(DEBUG)" -eq "1" ]; then \
+		make -j3 _debug $(NAME); else \
+		make -j3 $(NAME); fi
 
 $(NAME): $(O_FILES)
-	@gcc $(FLAGS) $(LINKS) -o $@ $(O_FILES) && printf "\033[0;32m%-24s\033[1;30m<<--\033[0;0m\n" "$@" || printf "\033[0;31m%-24s\033[1;30m<<--\033[0;0m\n" "$@"
+	@gcc $(FLAGS) -o $@ $(O_FILES) $(LINKS) \
+	&& printf "\033[0;32m%-24s\033[1;30m<<--\033[0;0m\n" "$@" \
+	|| printf "\033[0;31m%-24s\033[1;30m<<--\033[0;0m\n" "$@"
 
 $(O_DIR)%.o: $(C_DIR)%.c
 	@mkdir $(O_DIR) 2> /dev/null || echo "" > /dev/null
 	@printf "\033[1;30m"
-	@gcc $(FLAGS) $(LINKS) -o $@ -c $< && printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;32m$@\033[0;0m\n" "$<" || (printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;31m$@\033[0;0m\n" "$<" && exit 1)
+	@gcc $(FLAGS) -o $@ -c $< $(LINKS) \
+	&& printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;32m$@\033[0;0m\n" "$<" \
+	|| (printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;31m$@\033[0;0m\n" "$<" \
+		&& exit 1)
 
 debug: _debug all
 
@@ -48,9 +59,6 @@ fclean: clean
 	@make -C $(LIBFT) fclean
 	@rm $(NAME) 2> /dev/null || echo "" > /dev/null
 
-update: fclean
-	@git subtree pull --prefix=libft --squash ../libft master -m "Update libft"
-
 re: fclean all
 
 rebug: fclean debug
@@ -59,4 +67,4 @@ _debug:
 	$(eval FLAGS = -Wall -Wextra -g)
 	$(eval DEBUG = 1)
 
-.PHONY: all debug clean fclean update re rebug _debug
+.PHONY: all debug clean fclean re rebug _debug
