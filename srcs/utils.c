@@ -19,12 +19,12 @@ void			error(char *str)
 	exit(1);
 }
 
-int				ft_mix(int a, int b, double pos)
+int				ft_mixd(int a, int b, double pos)
 {
 	return (a - (a * pos) + (b * pos));
 }
 
-double			ft_pos(int min, int max, int pos)
+double			ft_posd(int min, int max, int pos)
 {
 	if (pos <= min || pos >= max)
 		return ((pos <= min) ? 0.0 : 1.0);

@@ -18,8 +18,8 @@
 
 # include "libft.h"
 
-# define WIDTH		2560
-# define HEIGHT		1400
+# define WIDTH		1600
+# define HEIGHT		850
 
 # define DEF_COLORS	"255,0,0 ; 255,100,0"
 # define DEF_PTDIST	70
@@ -77,8 +77,8 @@ t_color			atocolor(char *str);
 ** utils.c
 */
 void			error(char *str);
-int				ft_mix(int a, int b, double pos);
-double			ft_pos(int min, int max, int pos);
+int				ft_mixd(int a, int b, double pos);
+double			ft_posd(int min, int max, int pos);
 
 /*
 ** ft_image

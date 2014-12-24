@@ -27,10 +27,10 @@ t_color			gradientget(t_array *gradient, double pos)
 	tmp1 = gradient->data[DOWN(pos)];
 	tmp2 = gradient->data[UP(pos)];
 	pos = (pos - DOWN(pos)) / (gradient->length - 1) * 2;
-	c.b.a = ft_mix(tmp1->b.a, tmp2->b.a, pos);
-	c.b.r = ft_mix(tmp1->b.r, tmp2->b.r, pos);
-	c.b.g = ft_mix(tmp1->b.g, tmp2->b.g, pos);
-	c.b.b = ft_mix(tmp1->b.b, tmp2->b.b, pos);
+	c.b.a = ft_mixd(tmp1->b.a, tmp2->b.a, pos);
+	c.b.r = ft_mixd(tmp1->b.r, tmp2->b.r, pos);
+	c.b.g = ft_mixd(tmp1->b.g, tmp2->b.g, pos);
+	c.b.b = ft_mixd(tmp1->b.b, tmp2->b.b, pos);
 	return (c);
 }
 
