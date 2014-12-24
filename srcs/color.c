@@ -89,7 +89,6 @@ t_color			atocolor(char *str)
 		i++;
 	while (!ft_isdigit(str[i]) && str[i] != '\0')
 		i++;
-	if (str[i] != '\0')
-		color.b.a = ft_atoi(str + i);
+	color.b.a = (str[i] != '\0') ? ft_atoi(str + i) : 255;
 	return (color);
 }
