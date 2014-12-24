@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_drawnpt.c                                       :+:      :+:    :+:   */
+/*   ft_memalign.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/11 16:40:11 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 16:40:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/19 15:03:31 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/19 15:03:41 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_drawnpt(t_image *img, t_pt pt, int n, t_color color)
+t_ulong			*ft_memalign(void *mem, const void *data, size_t *len)
 {
-	int				pos;
-	t_color			tmp;
+	t_byte			*bytes8;
+	t_byte			*src8;
+	t_ulong			n;
 
-	if (pt.x < 0 || pt.x >= img->width || pt.y < 0 || pt.y >= img->height)
-		return ;
-	pos = (img->width * pt.y + pt.x) * img->opp;
-	n *= img->opp;
-	while (n >= 0)
-	{
-		tmp = color;
-		if (ALPHA(tmp))
-			ft_resalpha(&tmp, ft_imagepos(img, pos));
-		ft_imageput(img, pos, tmp);
-		n -= img->opp;
-		pos += img->opp;
-	}
+	bytes8 = (t_byte*)mem;
+	src8 = (t_byte*)data;
+	n = MIN(*len, (t_ulong)mem & 3);
+	*len -= n;
+	while (n-- > 0)
+		*(bytes8++) = *(src8++);
+	return ((t_ulong*)bytes8);
 }
