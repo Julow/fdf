@@ -59,7 +59,6 @@ static t_env	*env_new(t_pt size, char *name)
 	env->loaded = FALSE;
 	env->max_z = 0;
 	env->min_z = 0;
-	env->project = &project_iso;
 	mlx_expose_hook(env->win, &expose_hook, env);
 	mlx_key_hook(env->win, &key_hook, env);
 	return (env);

@@ -43,7 +43,6 @@ typedef struct	s_env
 	double			pt_dist;
 	double			max_z;
 	double			min_z;
-	t_pt			(*project)(t_pos);
 }				t_env;
 
 /*
@@ -56,14 +55,9 @@ void			draw_map(t_env *env);
 /*
 ** draw3d.c
 */
+t_pt			project_iso(t_pos pos);
 void			ft_3dput(t_env *env, t_pos pos);
 void			draw3d_line(t_env *env, t_pos p1, t_pos p2);
-
-/*
-** project.c
-*/
-t_pt			project_para(t_pos pos);
-t_pt			project_iso(t_pos pos);
 
 /*
 ** color.c

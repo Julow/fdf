@@ -12,13 +12,22 @@
 
 #include "fdf.h"
 
+t_pt			project_iso(t_pos pos)
+{
+	t_pt			pt;
+
+	pt.x = ROUND(0.6 * pos.x - 0.6 * pos.y);
+	pt.y = ROUND(-pos.z + 0.3 * pos.x + 0.3 * pos.y);
+	return (pt);
+}
+
 void			ft_3dput(t_env *env, t_pos pos)
 {
 	t_pt			pt;
 
 	pos.x *= env->pt_dist;
 	pos.y *= env->pt_dist;
-	pt = env->project(pos);
+	pt = project_iso(pos);
 	pt.x += env->offset.x;
 	pt.y += env->offset.y;
 	ft_drawpt(env->img, pt, gradientget(env->gradient,

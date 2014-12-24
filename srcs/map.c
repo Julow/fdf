@@ -56,7 +56,7 @@ static void		get_maxmin(t_env *env, t_pt *max, t_pt *min)
 		i.x = line->length;
 		while (i.x-- > 0)
 		{
-			tmp = env->project(POS(i.x * env->pt_dist, i.y * env->pt_dist,
+			tmp = project_iso(POS(i.x * env->pt_dist, i.y * env->pt_dist,
 				TG(double, line, i.x) * env->pt_dist / 10));
 			max->x = MAX(max->x, tmp.x);
 			max->y = MAX(max->y, tmp.y);
@@ -70,7 +70,7 @@ void			mapoffset(t_env *env)
 {
 	t_pt			max;
 	t_pt			min;
-	const t_pt		first = env->project(POS(0, 0, 0));
+	const t_pt		first = project_iso(POS(0, 0, 0));
 
 	mlx_string_put(env->mlx, env->win, 50, 50, 0xFFFFFF, "Measuring map...");
 	env->pt_dist = 1;
