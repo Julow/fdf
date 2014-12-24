@@ -15,42 +15,65 @@
 
 # include <stddef.h>
 
-# define MAL(t,l)	((t*)ft_malloc(sizeof(t) * (l)))
-# define MAL1(t)	((t*)ft_malloc(sizeof(t)))
+# define MAL(t,l)		((t*)ft_malloc(sizeof(t) * (l)))
+# define MAL1(t)		((t*)ft_malloc(sizeof(t)))
 
-# define TG(t,b,i)	(*((t*)(((t_tab*)b)->data + (((t_tab*)b)->size * (i)))))
-# define AG(t,a,i)	((t)(((t_array*)(a))->data[i]))
+# define VOIDADD(p,n)	((void*)(((t_byte*)(p)) + (n)))
+# define VOIDPP(p)		((p) = (void*)(((t_byte*)(p)) + 1))
+# define VOIDMM(p)		((p) = (void*)(((t_byte*)(p)) - 1))
 
-# define MIN(a,b)	(((a) < (b)) ? (a) : (b))
-# define MAX(a,b)	(((a) > (b)) ? (a) : (b))
-# define ABS(a)		(((a) < 0) ? -(a) : (a))
+# define TG(t,b,i)		(*(t*)(((t_tab*)b)->data + (((t_tab*)b)->size * (i))))
+# define TI(b,i)		(((t_tab*)b)->data + (((t_tab*)b)->size * (i)))
+# define AG(t,a,i)		((t)(((t_array*)(a))->data[i]))
 
-# define UP(n)		((int)(1 + (n)))
-# define ROUND(n)	((int)(0.5 + (n)))
-# define DOWN(n)	((int)(n))
+# define MIN(a,b)		(((a) < (b)) ? (a) : (b))
+# define MAX(a,b)		(((a) > (b)) ? (a) : (b))
+# define ABS(a)			(((a) < 0) ? -(a) : (a))
 
-# define PT(x,y)	((t_pt){(x), (y)})
-# define POS(x,y,z)	((t_pos){(x), (y), (z)})
+# define UP(n)			((int)(1 + (n)))
+# define ROUND(n)		((int)(0.5 + (n)))
+# define DOWN(n)		((int)(n))
+
+# define PT(x,y)		((t_pt){(x), (y)})
+# define POS(x,y,z)		((t_pos){(x), (y), (z)})
+# define RECT(x,y,w,h)	((t_rect){(x), (y), (w), (h)})
+
+# define C(c)			((t_color)(t_uint)(c))
+# define RGBA(r,g,b,a)	((t_rgb){(b), (g), (r), (a)})
+# define RGB(r,g,b)		RGBA(r, g, b, 255)
+# define INVI(c)		((c).u < 0x01000000)
+# define ALPHA(c)		((c).u < 0xFF000000)
+
+# define BIG(a)			((a) * 1000000)
+# define BTOI(a)		((a) / 1000000)
+# define MIX(a,b,p)		((a) - BTOI((a) * (p)) + BTOI((b) * (p)))
 
 # ifndef TRUE
-#  define TRUE		1
+#  define TRUE			1
 # endif
 # ifndef FALSE
-#  define FALSE		0
+#  define FALSE			0
 # endif
 
 # ifndef ERROR
-#  define ERROR		-1
+#  define ERROR			-1
 # endif
 
 # ifndef EOF
-#  define EOF		-1
+#  define EOF			-1
 # endif
 
-# define UCHAR		unsigned char
-# define UINT		unsigned int
-# define LONG		long long int
-# define ULONG		unsigned long long int
+# define UCHAR			unsigned char
+# define UINT			unsigned int
+# define LONG			long long int
+# define ULONG			unsigned long long int
+
+/*
+** t_big represent a decimal number
+** it's a t_long divide by 1000000
+** ==> 9 223 372 000 000.000 000
+*/
+typedef LONG	t_big;
 
 typedef char	t_bool;
 typedef UCHAR	t_byte;
@@ -96,7 +119,7 @@ typedef struct	s_pair
 
 typedef struct	s_image
 {
-	char			*data;
+	t_byte			*data;
 	void			*img;
 	int				width;
 	int				height;
@@ -105,16 +128,19 @@ typedef struct	s_image
 	int				endian;
 }				t_image;
 
+typedef struct	s_rgb
+{
+	t_uchar			b;
+	t_uchar			g;
+	t_uchar			r;
+	t_uchar			a;
+}				t_rgb;
+
 typedef union	u_color
 {
-	struct		s_color
-	{
-		t_uchar			b;
-		t_uchar			g;
-		t_uchar			r;
-		t_uchar			a;
-	}				b;
-	t_uint			i;
+	t_rgb			b;
+	t_uint			u;
+	int				i;
 }				t_color;
 
 typedef struct	s_pt
@@ -122,6 +148,14 @@ typedef struct	s_pt
 	int				x;
 	int				y;
 }				t_pt;
+
+typedef struct	s_rect
+{
+	int				x;
+	int				y;
+	int				width;
+	int				height;
+}				t_rect;
 
 typedef struct	s_pos
 {
@@ -136,10 +170,12 @@ typedef struct	s_pos
 void			*ft_malloc(t_uint size);
 
 void			ft_bzero(void *s, size_t n);
+t_ulong			*ft_memalign(void *mem, const void *data, size_t *len);
 void			*ft_memset(void *b, int c, size_t len);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			*ft_memcpy(void *dst, const void *src, t_uint len);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
-void			*ft_memmove(void *dst, const void *src, size_t len);
+void			*ft_memmove(void *dst, const void *src, t_uint len);
+void			ft_memswap(void *mem1, void *mem2, t_uint len);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memalloc(size_t size);
@@ -244,6 +280,7 @@ void			ft_putnbr_fd(int n, int fd);
 t_tab			*ft_tabnew(int size);
 void			ft_tabini(t_tab *tab, int size);
 void			*ft_tabget(t_tab *tab, int index);
+void			*ft_tabadd0(t_tab *tab);
 void			ft_tabadd(t_tab *tab, void *add);
 void			ft_tabaddn(t_tab *tab, void *add, int n);
 void			ft_tabset(t_tab *tab, void *set, int index, int n);
@@ -340,19 +377,34 @@ int				ft_stringput(t_string *str);
 int				ft_stringputfd(t_string *str, int const fd);
 
 /*
+** Math
+*/
+int				ft_mix(int a, int b, t_big pos);
+
+/*
 ** Draw on struct s_image (t_image)
 */
-void			ft_resrect(t_pt *p1, t_pt *p2);
+void			ft_resalpha(t_color *c, t_color bg);
+void			ft_resrect(t_rect *rect, t_rect bounds);
 
+t_color			ft_imagept(t_image *img, t_pt pt);
+t_color			ft_imagepos(t_image *img, int pos);
+void			ft_imageput(t_image *img, int pos, t_color color);
 void			ft_imageclr(t_image *img);
+void			ft_imageclrc(t_image *img, t_color color);
+t_image			*ft_imageclone(t_image *img);
+void			ft_imageclonekil(t_image *clone);
 
 void			ft_drawxy(t_image *img, int x, int y, t_color color);
 void			ft_drawpt(t_image *img, t_pt pt, t_color color);
 void			ft_drawnpt(t_image *img, t_pt pt, int n, t_color color);
 
+void			ft_drawimage(t_image *dst, t_image *src, t_pt pos, t_rect part);
+
 void			ft_drawline(t_image *img, t_pt p1, t_pt p2, t_color color);
-void			ft_drawrect(t_image *img, t_pt p1, t_pt p2, t_color color);
-void			ft_drawrectf(t_image *img, t_pt p1, t_pt p2, t_color color);
+void			ft_drawrect(t_image *img, t_rect rect, t_color color);
+void			ft_drawrectf(t_image *img, t_rect rect, t_color color);
+void			ft_drawdiv(t_image *img, int y, int height, t_color color);
 void			ft_drawcircle(t_image *img, t_pt o, int radius, t_color color);
 void			ft_drawcirclef(t_image *img, t_pt o, int radius, t_color color);
 

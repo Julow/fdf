@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_drawnpt.c                                       :+:      :+:    :+:   */
+/*   ft_imagept.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/11 16:40:11 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 16:40:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/17 18:11:43 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/12/17 18:11:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_drawnpt(t_image *img, t_pt pt, int n, t_color color)
+t_color			ft_imagept(t_image *img, t_pt pt)
 {
+	t_color			c;
 	int				pos;
-	t_color			tmp;
+	int				i;
 
+	c = C(0xFF000000);
 	if (pt.x < 0 || pt.x >= img->width || pt.y < 0 || pt.y >= img->height)
-		return ;
-	pos = (img->width * pt.y + pt.x) * img->opp;
-	n *= img->opp;
-	while (n >= 0)
+		return (c);
+	pos = img->l_size * pt.y + (pt.x * img->opp);
+	i = -1;
+	while (++i < img->opp)
 	{
-		tmp = color;
-		if (ALPHA(tmp))
-			ft_resalpha(&tmp, ft_imagepos(img, pos));
-		ft_imageput(img, pos, tmp);
-		n -= img->opp;
-		pos += img->opp;
+		c.u = c.u >> 8;
+		c.b.a = img->data[pos + i];
 	}
+	c.u = c.u << (4 - img->opp);
+	return (c);
 }
