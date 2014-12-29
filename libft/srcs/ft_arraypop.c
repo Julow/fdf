@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_arraypop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 17:29:59 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/04 17:30:00 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/28 23:48:22 by juloo             #+#    #+#             */
+/*   Updated: 2014/12/28 23:48:22 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void			ft_putchar(char c)
+void			*ft_arraypop(t_array *array)
 {
-	IGNORE(write(1, &c, 1));
+	void			*tmp;
+
+	if (array->length > 0)
+	{
+		array->length--;
+		tmp = array->data[array->length];
+		array->data[array->length] = NULL;
+	}
+	else
+		tmp = NULL;
+	return (tmp);
 }

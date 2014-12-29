@@ -48,6 +48,8 @@
 # define BTOI(a)		((a) / 1000000)
 # define MIX(a,b,p)		((a) - BTOI((a) * (p)) + BTOI((b) * (p)))
 
+# define IGNORE(f)		((void)((f) + 1))
+
 # ifndef TRUE
 #  define TRUE			1
 # endif
@@ -179,6 +181,7 @@ void			ft_memswap(void *mem1, void *mem2, t_uint len);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memalloc(size_t size);
+void			ft_memralloc(void **mem, t_uint len, t_uint newlen);
 void			ft_memdel(void **ap);
 
 size_t			ft_tablen(void **array);
@@ -286,6 +289,7 @@ void			ft_tabaddn(t_tab *tab, void *add, int n);
 void			ft_tabset(t_tab *tab, void *set, int index, int n);
 void			ft_tabins(t_tab *tab, void *ins, int index, int n);
 void			ft_tabrem(t_tab *tab, int index, int n);
+void			ft_tabpop(t_tab *tab);
 int				ft_tabchr(t_tab *tab, void *chr);
 void			ft_tabfree(t_tab *tab);
 void			ft_tabclr(t_tab *tab);
@@ -316,6 +320,7 @@ void			ft_arrayadd(t_array *array, void *add);
 void			ft_arrayset(t_array *array, void *set, int index);
 void			ft_arrayins(t_array *array, void *ins, int index);
 void			*ft_arrayrem(t_array *array, int index);
+void			*ft_arraypop(t_array *array);
 int				ft_arraychr(t_array *array, void *chr);
 void			ft_arrayapp(t_array *array, t_array *app);
 void			ft_arrayfree(t_array *array);
@@ -407,6 +412,8 @@ void			ft_drawrectf(t_image *img, t_rect rect, t_color color);
 void			ft_drawdiv(t_image *img, int y, int height, t_color color);
 void			ft_drawcircle(t_image *img, t_pt o, int radius, t_color color);
 void			ft_drawcirclef(t_image *img, t_pt o, int radius, t_color color);
+void			ft_drawtri(t_image *img, t_pt pts[3], t_color color);
+void			ft_drawtrif(t_image *img, t_pt pts[3], t_color color);
 
 /*
 ** Read a file line per line.

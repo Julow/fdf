@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_drawtri.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 17:29:59 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/04 17:30:00 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/25 20:24:30 by juloo             #+#    #+#             */
+/*   Updated: 2014/12/25 20:24:30 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void			ft_putchar(char c)
+void			ft_drawtri(t_image *img, t_pt pts[3], t_color color)
 {
-	IGNORE(write(1, &c, 1));
+	ft_drawline(img, pts[0], pts[1], color);
+	ft_drawline(img, pts[0], pts[2], color);
+	ft_drawline(img, pts[1], pts[2], color);
 }
