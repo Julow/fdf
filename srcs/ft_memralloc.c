@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabfree.c                                       :+:      :+:    :+:   */
+/*   ft_memralloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/14 22:05:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/14 22:05:07 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/27 18:47:46 by juloo             #+#    #+#             */
+/*   Updated: 2014/12/27 18:47:46 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void			ft_tabfree(t_tab *tab)
+void			ft_memralloc(void **mem, t_uint len, t_uint newlen)
 {
-	t_byte			*tmp;
+	void			*tmp;
 
-	if (tab->bytes >= tab->alloc_bytes)
+	if (mem == NULL)
 		return ;
-	tmp = MAL(t_byte, tab->bytes);
-	tab->alloc_bytes = tab->bytes;
-	if (tab->data != NULL)
+	tmp = ft_malloc(newlen);
+	if (*mem != NULL)
 	{
-		ft_memcpy(tmp, tab->data, tab->bytes);
-		free(tab->data);
+		ft_memcpy(tmp, *mem, MIN(len, newlen));
+		ft_bzero(tmp + len, newlen - len);
+		free(*mem);
 	}
-	tab->data = tmp;
+	else
+		ft_bzero(tmp, newlen);
+	*mem = tmp;
 }

@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_tabpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 17:29:59 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/11/04 17:30:00 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/12/28 23:48:15 by juloo             #+#    #+#             */
+/*   Updated: 2014/12/28 23:48:15 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void			ft_putchar(char c)
+void			ft_tabpop(t_tab *tab)
 {
-	IGNORE(write(1, &c, 1));
+	if (tab->length > 0)
+	{
+		tab->length--;
+		tab->bytes -= tab->size;
+	}
 }
