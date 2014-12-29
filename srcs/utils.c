@@ -21,7 +21,9 @@ void			error(char *str)
 
 int				ft_mixd(int a, int b, double pos)
 {
-	return (a - (a * pos) + (b * pos));
+	if (a > b)
+		return (a - DOWN((double)(a - b) * pos));
+	return (DOWN((double)(b - a) * pos) + a);
 }
 
 double			ft_posd(int min, int max, int pos)

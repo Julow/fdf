@@ -18,15 +18,17 @@ t_color			gradientget(t_array *gradient, double pos)
 	t_color			*tmp1;
 	t_color			*tmp2;
 	t_color			c;
+	int				down;
 
 	if (pos >= 1 || gradient->length == 1)
 		return (*((t_color*)gradient->data[gradient->length - 1]));
 	if (pos <= 0)
 		return (*((t_color*)gradient->data[0]));
 	pos *= (gradient->length - 1);
-	tmp1 = gradient->data[DOWN(pos)];
-	tmp2 = gradient->data[UP(pos)];
-	pos = (pos - DOWN(pos)) / (gradient->length - 1) * 2;
+	down = DOWN(pos);
+	tmp1 = gradient->data[down];
+	tmp2 = gradient->data[down + 1];
+	pos = (pos - down) / (gradient->length - 1);
 	c.b.a = ft_mixd(tmp1->b.a, tmp2->b.a, pos);
 	c.b.r = ft_mixd(tmp1->b.r, tmp2->b.r, pos);
 	c.b.g = ft_mixd(tmp1->b.g, tmp2->b.g, pos);
