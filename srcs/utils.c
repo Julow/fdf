@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/13 17:23:09 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/13 17:23:09 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/03 00:24:24 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int				ft_mixd(int a, int b, double pos)
 	return (DOWN((double)(b - a) * pos) + a);
 }
 
-double			ft_posd(int min, int max, int pos)
+double			ft_posd(int min, int max, int curr)
 {
-	if (pos <= min || pos >= max)
-		return ((pos <= min) ? 0.0 : 1.0);
+	if (curr <= min || curr >= max)
+		return ((curr <= min) ? 0.0 : 1.0);
 	if (min < 0)
-		return ((double)(pos - min) / (double)(max - min));
-	return ((double)(pos + min) / (double)(max + min));
+		return ((double)(curr - min) / (double)(max - min));
+	return ((double)(curr + min) / (double)(max + min));
 }

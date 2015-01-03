@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 19:48:31 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 19:48:31 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/03 15:58:15 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_color			gradientget(t_array *gradient, double pos)
 		return (*((t_color*)gradient->data[gradient->length - 1]));
 	if (pos <= 0)
 		return (*((t_color*)gradient->data[0]));
-	pos *= (gradient->length - 1);
+	pos *= gradient->length;
 	down = DOWN(pos);
 	tmp1 = gradient->data[down];
 	tmp2 = gradient->data[down + 1];
-	pos = (pos - down) / (gradient->length - 1);
+	pos -= down;
 	c.b.a = ft_mixd(tmp1->b.a, tmp2->b.a, pos);
 	c.b.r = ft_mixd(tmp1->b.r, tmp2->b.r, pos);
 	c.b.g = ft_mixd(tmp1->b.g, tmp2->b.g, pos);
@@ -58,12 +58,10 @@ t_array			*gradientnew(char *input)
 		ft_arrayadd(gradient, tmp);
 		free(colors[i]);
 	}
-	if (i <= 0)
-	{
-		tmp = MAL1(t_color);
-		*tmp = atocolor(colors[i]);
-		ft_arrayadd(gradient, tmp);
-	}
+	if (i > 0)
+		ft_arrayadd(gradient, ft_memdup(tmp, sizeof(t_color)));
+	else
+		error("Error: Bad gradient.\n");
 	free(colors);
 	return (gradient);
 }
