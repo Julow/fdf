@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_internal.h                                      :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/30 19:49:39 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/06 23:05:01 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/04 12:28:32 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/11/04 12:28:33 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INTERNAL_H
-# define FT_INTERNAL_H
+#include "libft.h"
 
-# include "libft.h"
-
-# define PUTNBR_BUFF	11
-# define PUTLONG_BUFF	21
-
-# define GNL_BUFF		192
-
-# define GNL_SUCCES		1
-# define GNL_EOF		0
-# define GNL_ERROR		-1
-
-typedef struct	s_gnlfd
+char			*ft_strnstr(const char *s1, const char *s2, t_uint n)
 {
-	char			*buff;
-	int				fd;
-	int				length;
-	int				offset;
-	int				i;
-	struct s_gnlfd	*next;
-}				t_gnlfd;
+	t_uint			i;
+	t_uint			j;
 
-#endif
+	if (*s2 == '\0')
+		return ((char*)s1);
+	i = 0;
+	while (s1[i] != '\0' && i < n)
+	{
+		j = 0;
+		while (s2[j] != '\0' && (i + j) < n)
+		{
+			if (s1[i + j] != s2[j] || s2[j] == '\0')
+				break ;
+			j++;
+		}
+		if (s2[j] == '\0')
+			return (i + (char*)s1);
+		i++;
+	}
+	return (NULL);
+}

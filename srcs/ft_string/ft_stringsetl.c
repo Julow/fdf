@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_internal.h                                      :+:      :+:    :+:   */
+/*   ft_stringsetl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/30 19:49:39 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/06 23:05:01 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/17 12:29:55 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/11/17 12:29:58 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INTERNAL_H
-# define FT_INTERNAL_H
+#include "libft.h"
 
-# include "libft.h"
-
-# define PUTNBR_BUFF	11
-# define PUTLONG_BUFF	21
-
-# define GNL_BUFF		192
-
-# define GNL_SUCCES		1
-# define GNL_EOF		0
-# define GNL_ERROR		-1
-
-typedef struct	s_gnlfd
+void			ft_stringsetl(t_string *str, const char *set, int index, int l)
 {
-	char			*buff;
-	int				fd;
-	int				length;
-	int				offset;
 	int				i;
-	struct s_gnlfd	*next;
-}				t_gnlfd;
 
-#endif
+	i = index - str->length + l;
+	if (i > 0)
+	{
+		if (ft_stringext(str, i))
+			str->length += i;
+		else
+			l = str->length - i - 1;
+	}
+	ft_memmove(str->content + index, set, l);
+}

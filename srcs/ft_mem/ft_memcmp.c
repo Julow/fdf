@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_internal.h                                      :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/30 19:49:39 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/06 23:05:01 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/03 15:06:42 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/11/03 15:06:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INTERNAL_H
-# define FT_INTERNAL_H
+#include "libft.h"
 
-# include "libft.h"
-
-# define PUTNBR_BUFF	11
-# define PUTLONG_BUFF	21
-
-# define GNL_BUFF		192
-
-# define GNL_SUCCES		1
-# define GNL_EOF		0
-# define GNL_ERROR		-1
-
-typedef struct	s_gnlfd
+int				ft_memcmp(const void *s1, const void *s2, t_uint n)
 {
-	char			*buff;
-	int				fd;
-	int				length;
-	int				offset;
-	int				i;
-	struct s_gnlfd	*next;
-}				t_gnlfd;
-
-#endif
+	while (n > 7)
+	{
+		if (*((t_ulong*)s1) != *((t_ulong*)s2))
+			break ;
+		s1 += 8;
+		s2 += 8;
+		n -= 8;
+	}
+	while (n-- > 0)
+	{
+		if (*((t_byte*)s1) != *((t_byte*)s2))
+			return ((int)(*((t_byte*)s1) - *((t_byte*)s2)));
+		s1++;
+		s2++;
+	}
+	return (0);
+}
