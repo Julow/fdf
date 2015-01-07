@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_internal.h                                      :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/30 19:49:39 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/06 23:05:01 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/04 17:20:09 by jaguillo          #+#    #+#             */
+/*   Updated: 2014/11/04 17:20:10 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_INTERNAL_H
-# define FT_INTERNAL_H
+#include "ft_internal.h"
 
-# include "libft.h"
-
-# define PUTNBR_BUFF	11
-# define PUTLONG_BUFF	21
-
-# define GNL_BUFF		192
-
-# define GNL_SUCCES		1
-# define GNL_EOF		0
-# define GNL_ERROR		-1
-
-typedef struct	s_gnlfd
+char			*ft_itoa(int n)
 {
-	char			*buff;
-	int				fd;
-	int				length;
-	int				offset;
-	int				i;
-	struct s_gnlfd	*next;
-}				t_gnlfd;
+	char			nb[PUTNBR_BUFF];
+	t_uint			i;
 
-#endif
+	i = PUTNBR_BUFF;
+	nb[0] = (n < 0) ? '-' : '+';
+	if (n <= 0)
+	{
+		nb[--i] = '0' - (n % 10);
+		n /= -10;
+	}
+	while (n != 0)
+	{
+		nb[--i] = '0' + (n % 10);
+		n /= 10;
+	}
+	if (nb[0] == '-')
+		nb[--i] = '-';
+	return (ft_strndup(nb + i, PUTNBR_BUFF - i));
+}
