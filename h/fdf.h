@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 16:07:17 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/03 15:57:55 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/07 14:38:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # include "libft.h"
 
-# define WIDTH		1600
-# define HEIGHT		850
+# define WIDTH		2560
+# define HEIGHT		1400
 
 # define DEF_COLORS	"255,0,0 ; 255,100,0"
 # define DEF_PTDIST	70

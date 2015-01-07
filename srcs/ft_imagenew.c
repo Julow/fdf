@@ -6,11 +6,12 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 16:48:16 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/11 16:48:17 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/07 14:32:07 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdlib.h>
 
 t_image			*ft_imagenew(void *mlx, t_pt size)
 {

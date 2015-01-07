@@ -6,7 +6,7 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/26 10:32:54 by jaguillo          #+#    #+#              #
-#    Updated: 2014/11/26 10:32:55 by jaguillo         ###   ########.fr        #
+#    Updated: 2015/01/07 14:40:03 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ re: fclean all
 rebug: fclean debug
 
 _debug:
-	$(eval FLAGS = -Wall -Wextra -g)
+	$(eval FLAGS = -Wall -Wextra -g -D DEBUG_MODE)
 	$(eval DEBUG = 1)
 
 .PHONY: all debug clean fclean re rebug _debug

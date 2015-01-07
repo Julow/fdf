@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 19:48:31 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/03 15:58:15 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/07 16:13:10 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_color			gradientget(t_array *gradient, double pos)
 		return (*((t_color*)gradient->data[gradient->length - 1]));
 	if (pos <= 0)
 		return (*((t_color*)gradient->data[0]));
-	pos *= gradient->length;
+	pos *= gradient->length - 1;
 	down = DOWN(pos);
 	tmp1 = gradient->data[down];
 	tmp2 = gradient->data[down + 1];

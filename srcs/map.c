@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 16:00:48 by jaguillo          #+#    #+#             */
-/*   Updated: 2014/12/04 16:00:49 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/07 16:20:23 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ t_bool			load_map(int fd, t_env *env)
 		if (!load_pts(env, tmp, line))
 			valid = FALSE;
 		ft_arrayadd(env->map, tmp);
-		free(line);
 	}
 	mlx_string_put(env->mlx, env->win, 200, 35, 0xFFFFFF, "done.");
 	return (valid);
