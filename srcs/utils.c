@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/13 17:23:09 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/03 00:24:24 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/11 18:59:12 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ double			ft_posd(int min, int max, int curr)
 	if (min < 0)
 		return ((double)(curr - min) / (double)(max - min));
 	return ((double)(curr + min) / (double)(max + min));
+}
+
+void			ft_parsenot(t_buff *buff, const char *parse)
+{
+	while (buff->i < buff->length)
+	{
+		if (ft_strchr(parse, B(buff)) != NULL)
+			break ;
+		buff->i++;
+	}
 }

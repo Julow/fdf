@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/11 19:48:31 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/07 16:13:10 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/11 19:03:02 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,16 @@ t_array			*gradientnew(char *input)
 t_color			atocolor(char *str)
 {
 	t_color			color;
-	int				i;
+	t_buff			buff;
 
-	i = 0;
-	while (!ft_isdigit(str[i]) && str[i] != '\0')
-		i++;
-	color.b.r = ft_atoi(str + i);
-	while (ft_isdigit(str[i]))
-		i++;
-	while (!ft_isdigit(str[i]) && str[i] != '\0')
-		i++;
-	color.b.g = ft_atoi(str + i);
-	while (ft_isdigit(str[i]))
-		i++;
-	while (!ft_isdigit(str[i]) && str[i] != '\0')
-		i++;
-	color.b.b = ft_atoi(str + i);
-	while (ft_isdigit(str[i]))
-		i++;
-	while (!ft_isdigit(str[i]) && str[i] != '\0')
-		i++;
-	color.b.a = (str[i] != '\0') ? ft_atoi(str + i) : 255;
+	buff = BUFF(str, 0, ft_strlen(str));
+	ft_parsenot(&buff, "0123456789");
+	color.b.r = (t_uchar)ft_parseint(&buff);
+	ft_parsenot(&buff, "0123456789");
+	color.b.g = (t_uchar)ft_parseint(&buff);
+	ft_parsenot(&buff, "0123456789");
+	color.b.b = (t_uchar)ft_parseint(&buff);
+	ft_parsenot(&buff, "0123456789");
+	color.b.a = (buff.data[buff.i] != '\0') ? (t_uchar)ft_parseint(&buff) : 255;
 	return (color);
 }

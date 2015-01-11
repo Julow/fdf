@@ -6,37 +6,30 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 16:00:48 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/07 16:20:23 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/11 19:00:07 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdlib.h>
 
-static t_bool	load_pts(t_env *env, t_tab *pts, char *line)
+static t_bool	load_pts(t_env *env, t_tab *pts, t_buff *line)
 {
-	int				i;
 	double			tmp;
 	t_bool			valid;
 
 	valid = TRUE;
-	i = 0;
-	while (ft_iswhite(line[i]))
-		i++;
-	while (line[i] != '\0')
+	ft_parsespace(line);
+	while (B(line) != '\0')
 	{
-		tmp = ft_atod(line + i);
+		tmp = ft_parsedouble(line);
 		env->max_z = MAX(env->max_z, tmp);
 		env->min_z = MIN(env->min_z, tmp);
 		ft_tabadd(pts, &tmp);
-		while (!ft_iswhite(line[i]) && line[i] != '\0')
-		{
-			if (!ft_isdigit(line[i]) && line[i] != '-' && line[i] != '+')
-				valid = FALSE;
-			i++;
-		}
-		while (ft_iswhite(line[i]))
-			i++;
+		if (B(line) != ' ' && B(line) != '\0')
+			valid = FALSE;
+		ft_parsenot(line, " \t\n");
+		ft_parsespace(line);
 	}
 	return (valid);
 }
@@ -90,16 +83,16 @@ void			mapoffset(t_env *env)
 
 t_bool			load_map(int fd, t_env *env)
 {
-	char			*line;
+	t_buff			line;
 	t_tab			*tmp;
 	t_bool			valid;
 
 	mlx_string_put(env->mlx, env->win, 50, 35, 0xFFFFFF, "Loading map...");
 	valid = TRUE;
-	while (get_next_line(fd, &line) > 0 && line != NULL)
+	while (get_next_line(fd, &line) > 0)
 	{
 		tmp = ft_tabnew(sizeof(double));
-		if (!load_pts(env, tmp, line))
+		if (!load_pts(env, tmp, &line))
 			valid = FALSE;
 		ft_arrayadd(env->map, tmp);
 	}

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 16:07:17 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/07 16:50:34 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/11 18:59:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_color			atocolor(char *str);
 void			error(char *str);
 int				ft_mixd(int a, int b, double pos);
 double			ft_posd(int min, int max, int pos);
+void			ft_parsenot(t_buff *buff, const char *parse);
 
 /*
 ** ft_image
