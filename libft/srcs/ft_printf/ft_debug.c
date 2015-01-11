@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   ft_debug.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2015/01/09 11:52:31 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/10 18:23:00 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_internal.h"
+#include <stdlib.h>
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+void			ft_debug(const char *c, char *f, int l, const char *s, ...)
 {
-	int				i;
+	va_list			ap;
+	t_string		out;
 
-	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	ft_fdprintf(2, "%s %s():%-3d ", f, c, l);
+	if (s != NULL)
+	{
+		ft_stringini(&out);
+		va_start(ap, s);
+		parsef(&out, s, &ap);
+		va_end(ap);
+		ft_stringputfd(&out, 2);
+		free(out.content);
+	}
+	ft_putchar_fd('\n', 2);
 }

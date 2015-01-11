@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   flag_percent.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2014/11/27 12:53:30 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/09 11:35:26 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_internal.h"
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+void			flag_percent(t_string *out, t_opt *opt, va_list *ap)
 {
-	int				i;
+	char			c;
 
-	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	c = '%';
+	add_string(out, &c, 1, opt);
+	(void)ap;
 }

@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   ft_strcase.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2015/01/09 12:51:39 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/09 12:51:58 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+/*
+** ft_strcase
+** =============
+** Compare 's1' and 's2' case insensitive
+*/
+t_bool			ft_strcase(const char *s1, const char *s2)
 {
-	int				i;
+	t_uint			i;
 
-	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	if (s1 == NULL || s2 == NULL)
+		return ((s1 == s2) ? TRUE : FALSE);
+	i = 0;
+	while (ft_tolower(s1[i]) == ft_tolower(s2[i]) && s1[i] != '\0')
+		i++;
+	return ((ft_tolower(s1[i]) == ft_tolower(s2[i])) ? TRUE : FALSE);
 }

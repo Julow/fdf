@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   ft_parsespace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2015/01/11 17:32:54 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/11 17:33:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+void			ft_parsespace(t_buff *buff)
 {
-	int				i;
-
-	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	while (buff->i < buff->length && ft_isspace(B(buff)))
+		buff->i++;
 }

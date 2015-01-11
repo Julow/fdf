@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   ft_parselong.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2015/01/11 17:35:29 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/11 17:35:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+t_long			ft_parselong(t_buff *buff)
 {
-	int				i;
+	t_long			nb;
+	t_bool			negatif;
 
-	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	if (buff->i >= buff->length)
+		return (0);
+	negatif = FALSE;
+	nb = 0;
+	if ((B(buff) == '-' && (negatif = TRUE)) || B(buff) == '+')
+		buff->i++;
+	while (buff->i < buff->length && ft_isdigit(B(buff)))
+		nb = nb * 10 + (buff->data[buff->i++] - '0');
+	return (negatif ? -nb : nb);
 }
