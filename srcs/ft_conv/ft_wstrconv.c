@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayclr.c                                      :+:      :+:    :+:   */
+/*   ft_wstrconv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/15 16:08:42 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/09 13:41:06 by jaguillo         ###   ########.fr       */
+/*   Created: 2015/01/09 11:37:41 by jaguillo          #+#    #+#             */
+/*   Updated: 2015/01/09 11:45:26 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_arrayclr(void *array, void (*f)(void *data))
+int				ft_wstrconv(char *buff, int *wstr)
 {
 	int				i;
+	int				len;
 
+	len = 0;
 	i = -1;
-	if (f != NULL)
-		while (++i < ((t_array*)array)->length)
-			f(((t_array*)array)->data[i]);
-	ft_bzero(((t_array*)array)->data, S(void*, ((t_array*)array)->length));
-	((t_array*)array)->length = 0;
+	while (wstr[++i] != 0)
+		len += ft_widetoa(buff + len, wstr[i]);
+	return (len);
 }

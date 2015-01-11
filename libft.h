@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 11:52:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2015/01/06 13:24:51 by jaguillo         ###   ########.fr       */
+/*   Updated: 2015/01/11 17:45:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define TG(t,b,i)		(*(t*)(((t_tab*)b)->data + (((t_tab*)b)->size * (i))))
 # define TI(b,i)		(((t_tab*)b)->data + (((t_tab*)b)->size * (i)))
 # define AG(t,a,i)		((t)(((t_array*)(a))->data[i]))
+
+# define B(b)			((b)->data[(b)->i])
+# define BUFF(s,i,l)	((t_buff){(s), (i), (l)})
 
 # define MIN(a,b)		(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)		(((a) > (b)) ? (a) : (b))
@@ -47,6 +50,14 @@
 # define IGNORE(f)		((void)((f) + 1))
 
 # define ISNAN(d)		((d) != (d))
+
+# ifdef DEBUG_MODE
+#  define DEBUG(d, ...) ft_debug(__func__, __FILE__, __LINE__, d, __VA_ARGS__)
+#  define TRACE			ft_debug(__func__, __FILE__, __LINE__, NULL)
+# else
+#  define DEBUG(d, ...)
+#  define TRACE
+# endif
 
 # ifndef TRUE
 #  define TRUE			1
@@ -126,6 +137,13 @@ typedef struct	s_pair
 	t_string		*key;
 	void			*value;
 }				t_pair;
+
+typedef struct	s_buff
+{
+	char			*data;
+	int				i;
+	int				length;
+}				t_buff;
 
 typedef struct	s_image
 {
@@ -211,6 +229,8 @@ int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, t_uint n);
 t_bool			ft_strequ(const char *s1, const char *s2);
 t_bool			ft_strnequ(const char *s1, const char *s2, t_uint n);
+t_bool			ft_strcase(const char *s1, const char *s2);
+t_bool			ft_strncase(const char *s1, const char *s2, t_uint n);
 
 void			ft_strnadd(char **str, const char *add, t_uint len);
 
@@ -274,6 +294,10 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 void			ft_strlower(char *str);
 void			ft_strupper(char *str);
+
+int				ft_wstrconv(char *buff, int *wstr);
+int				ft_wstrnconv(char *buff, int *wstr, int n);
+int				ft_widetoa(char *buff, int w);
 
 /*
 ** Write
@@ -339,6 +363,7 @@ void			*ft_arrayrem(t_array *array, int index);
 void			*ft_arraypop(t_array *array);
 int				ft_arraychr(t_array *array, const void *chr);
 void			ft_arrayapp(t_array *array, const t_array *app);
+t_array			*ft_arraydup(const t_array *array);
 void			ft_arrayfree(t_array *array);
 void			ft_arrayclr(void *array, void (*f)(void *data));
 void			ft_arraykil(void *array, void (*f)(void *data));
@@ -398,6 +423,21 @@ int				ft_stringput(t_string *str);
 int				ft_stringputfd(t_string *str, int const fd);
 
 /*
+** =============
+** struct s_buff (t_buff) represent a buffer being parsed
+** 'data' is not the original malloced pointer (can't be free)
+** 'data' may not be NULL terminated
+** macro B() return the current char
+** macro BUFF() init a t_buff
+*/
+void			ft_parse(t_buff *buff, const char *parse);
+t_buff			ft_parsesub(t_buff *buff, const char *parse);
+int				ft_parseint(t_buff *buff);
+t_long			ft_parselong(t_buff *buff);
+double			ft_parsedouble(t_buff *buff);
+void			ft_parsespace(t_buff *buff);
+
+/*
 ** Math
 */
 int				ft_mix(int a, int b, t_big pos);
@@ -420,6 +460,7 @@ void			ft_imageclonekil(t_image *clone);
 void			ft_drawxy(t_image *img, int x, int y, t_color color);
 void			ft_drawpt(t_image *img, t_pt pt, t_color color);
 void			ft_drawnpt(t_image *img, t_pt pt, int n, t_color color);
+void			ft_drawvert(t_image *img, t_pt pt, int height, t_color color);
 
 void			ft_drawimage(t_image *dst, t_image *src, t_pt pos, t_rect part);
 
@@ -435,6 +476,42 @@ void			ft_drawtrif(t_image *img, t_pt pts[3], t_color color);
 /*
 ** get_next_line
 */
-int				get_next_line(int const fd, char **line);
+int				get_next_line(int const fd, t_buff *line);
+
+/*
+** =============
+** A format sequence be like:
+**    %[flags][width][.precision]format
+** flags can be 0 or more: '#', ' ', '-', '+', '^', '0', ''', '>', 'm', 'M', 'T'
+** width is a positive integer
+** precision is a positive integer or '*', precision start with '.'
+** format can be one of "%sSdDoOuUxXicCnp"
+** =============
+** =
+** =
+** ft_printf
+** =============
+** Process the format sequence like printf and print the result to stdout
+** =============
+** Return the total of char printed.
+** =
+** =
+** ft_printf_fd
+** =============
+** Like ft_printf but the result is printed to the fd 'fd'
+** =============
+** Return the total of char printed.
+** =
+** =
+** ft_stringf
+** =============
+** Like ft_printf but the result return in a t_string
+** =============
+** A t_string containing the result.
+*/
+int				ft_printf(const char *format, ...);
+int				ft_fdprintf(const int fd, const char *format, ...);
+t_string		*ft_stringf(const char *format, ...);
+void			ft_debug(const char *c, char *f, int l, const char *s, ...);
 
 #endif
